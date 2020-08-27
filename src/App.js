@@ -2,41 +2,20 @@ import React from 'react';
 
 class App extends React.Component {
   state = {
-    count: 0
+    isLoading: true,
+    movies: []
   };
 
-  add = () => {
-    this.setState(hey => ({count: hey.count + 1}));
-  }
-  minus = () => {
-    this.setState(current => ({count: current.count - 1}));
-  }
-  // Component Life Cycle APIs
-  // 컴포넌트가 DOM에 생성되기 전, 후나 업데이트되기 전, 후로 실행되는 메소드들
-  //*** constructor(props) : 개인적으로 찾아보기 *** 
-
-  // 1. when component is insulted into the DOM
   componentDidMount() {
-    console.log("I created");
-  }
-
-  // 2. 실제 DOM이 업데이트하기 전에 업데이트 해야하는지 알아보기 위해 가상 DOM에 컴포넌트를 재 render하는 단계
-  componentDidUpdate() {
-    console.log("I'm updated");
-  }
-  // 3. 컴포넌트가 DOM에서 해제되는 단계
-  componentWillUnmount() {
-    console.log("I'm died");
+    setTimeout( () => {
+      this.setState({ isLoading: false });
+      // ***** state를 직접적으로 바로 건들이는 것은 매우 위험한 습관. setState를 습관하하자.
+    }, 6000);
   }
 
   render() {
-    return (
-      <div>
-        <h1>The count is : {this.state.count} </h1>
-        <button onClick={this.add}>Add</button>
-        <button onClick={this.minus}>Minus</button>
-      </div>
-    );
+    const { isLoading } = this.state; // Q. 정확한 이해 필요
+    return <div>{isLoading ? "Loading..." : "Complete!"}</div>;
   }
 }
 

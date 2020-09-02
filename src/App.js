@@ -1,39 +1,21 @@
 import React from 'react';
-import PhoneForm from './componenets/PhoneForm';
-import PhoneInfoList from './componenets/PhoneInfoList';
+import FilterableProductTable from './Thinking in React/FilterableProductTable.js'
+
+const PRODUCTS = [
+  {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
+  {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
+  {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
+  {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
+  {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
+  {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
+];
 
 class App extends React.Component {
-  id = 2
-  state = {
-    information: [
-      {
-        id: 0,
-        name: '오소현',
-        phone: '010-0000-0000'
-      },
-      {
-        id: 1,
-        name: '홍길동',
-        phone: '010-1111-1111'
-      }
-    ]
-  }
 
-  handleCreate = (data) => {
-    const { information } = this.state;
-    this.setState({
-      information: information.concat({ id: this.id++, ...data }),
-    });
-  }
+  
   render() {
-    // const {information} = this.state;
     return (
-      <div>
-        <PhoneForm onCreate={this.handleCreate} />
-        <PhoneInfoList data={this.state.information} />
-
-      </div>
-    );
+    <FilterableProductTable products={PRODUCTS} />);
   }
 }
 

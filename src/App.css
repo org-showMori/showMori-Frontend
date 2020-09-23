@@ -11,3 +11,9 @@ header {
 header#titleImg {
     width: 20vw;
 } 
+
+body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

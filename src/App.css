@@ -1,19 +1,92 @@
-#App {
+#root {
     display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 }
-
+/* header part */
 header {
     display: flex;
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 header#titleImg {
     width: 20vw;
-} 
+}
 
-body {
+#main {
+    width: 60vmin;
+}
+
+#SearchBarDiv {
+    width: 80vmin;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
+#inputText{
+    padding: 0.7vmin 10vmin;
+}
+#SearchBarDiv button {
+    width: 8vmin;
+    height: 4vmin;
+}
+
+#menu {
+    width: 60vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 1.2rem;
+    align-items: center;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+#userMenu {
+    display: flex;
+    width: 25vmin;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+}
+
+/* body part */
+
+#bodyPage {
+    display: flex;
+    width: 100vmax;
+    flex-direction: row;
+    height: 100vmin;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Log in*/
+.userFormContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50vmin;
+    width: 70vmin;
+}
+.userFormTitle {
+    font-size: 2rem;
+    font-family: 'Fira Sans', sans-serif;
+    border-bottom: 1px gray solid;
+    padding-bottom: 1rem;
+}
+
+.userFormContainer form{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+
+/* event class */
+.clickedBtn {
+    color: #ED4C67;
+}
+/* font-family: 'Fira Sans', sans-serif;
+font-family: 'Nanum Gothic', sans-serif; */

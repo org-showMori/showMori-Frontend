@@ -81,7 +81,23 @@ header#titleImg {
     display: flex;
     flex-direction: column;
     width: 80%;
+    height: 100%;
 }
+
+.formLabel {
+    margin-top: 2.5rem;
+    font-size: 1.2rem;
+    color: grey;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+.formInput {
+    padding: 1rem;
+    margin: 0.4rem;
+    border: none;
+    border-bottom: 1px solid grey;
+    box-shadow: 5px 10px 20px grey;
+}
+
 
 
 /* event class */

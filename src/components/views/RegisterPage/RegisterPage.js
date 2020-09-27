@@ -46,7 +46,7 @@ function RegisterPage(props) {
     };
 
     dispatch(registerUser(body)).then((response) => {
-      if (response.payload.success) {
+      if (response.payload.register) {
         props.history.push("/LoginPage");
       } else {
         alert("회원가입에 실패했습니다.");
@@ -55,20 +55,20 @@ function RegisterPage(props) {
   };
 
   return (
-    <div class="userFormContainer">
-      <p className="userFormTitle">Sign up</p>
+    <div className="userFormContainer">
+      <p className="userFormTitle">Sign up</p> 
       <form onSubmit={onSubmitHandler}>
-        <label>아이디</label>
-        <input type="text" value={Id} onChange={onIdHandler} />
-        <label>비밀번호</label>
-        <input type="password" value={Pw} onChange={onPwHandler} />
-        <label>비밀번호 확인</label>
-        <input type="text" value={ConfirmPw} onChange={onConfirmPwHandler} />
+        <label className="formLabel">아이디</label>
+        <input className="formInput" type="text" value={Id} onChange={onIdHandler} />
+        <label className="formLabel">비밀번호</label>
+        <input className="formInput" type="password" value={Pw} onChange={onPwHandler} />
+        <label className="formLabel">비밀번호 확인</label>
+        <input className="formInput" type="text" value={ConfirmPw} onChange={onConfirmPwHandler} />
         <p id="alertConfirmPw">비밀번호 확인이 되지 않습니다.</p>
-        <label>이름</label>
-        <input type="text" value={Name} onChange={onNameHandler} />
-        <label>전화번호</label>
-        <input type="number" value={Phone} onChange={onPhoneHandler} />
+        <label className="formLabel">이름</label>
+        <input className="formInput" type="text" value={Name} onChange={onNameHandler} />
+        <label className="formLabel">전화번호</label>
+        <input className="formInput" type="number" value={Phone} onChange={onPhoneHandler} />
         {/* <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" /> */}
         <button type="submit">submit</button>
       </form>

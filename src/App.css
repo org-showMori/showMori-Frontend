@@ -1,13 +1,11 @@
 #root {
     display: flex;
     flex-direction: column;
-    width: 100%;
     align-items: center;
 }
 /* header part */
 header {
     display: flex;
-    width: 100%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -15,49 +13,47 @@ header {
 header#titleImg {
     width: 20vw;
 }
-
 #main {
     width: 60vmin;
 }
 
-#SearchBarDiv {
-    width: 80vmin;
+.searchInput:focus {
+    width: 80%;
+}
+
+.searchBarDiv {
+    width: 30%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex;
+    align-items: center;
 }
-#inputText{
-    padding: 0.7vmin 10vmin;
+.searchBarDiv form {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
-#SearchBarDiv button {
+
+.searchInput{
+    padding: 1.2em 7em;
+}
+
+.searchBarDiv button {
     width: 8vmin;
     height: 4vmin;
 }
 
-#menu {
-    width: 60vmin;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    font-size: 1.2rem;
-    align-items: center;
-    font-family: 'Nanum Gothic', sans-serif;
-}
-#userMenu {
-    display: flex;
-    width: 25vmin;
-    flex-direction: row;
-    justify-content: space-evenly;
-    
-}
+
+
+
 
 /* body part */
 
 #bodyPage {
     display: flex;
-    width: 100vmax;
+    height: 130vmin;
     flex-direction: row;
-    height: 100vmin;
     justify-content: center;
     align-items: center;
 }
@@ -67,9 +63,9 @@ header#titleImg {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 50vmin;
     width: 70vmin;
 }
+
 .userFormTitle {
     font-size: 2rem;
     font-family: 'Fira Sans', sans-serif;
@@ -80,29 +76,101 @@ header#titleImg {
 .userFormContainer form{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     height: 100%;
 }
 
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.altValidInputs {
+    font-size: 0.7rem;
+    color: #ED4C67;
+}
 .formLabel {
-    margin-top: 2.5rem;
+    margin-top: 2rem;
+    margin-right: 1rem;
     font-size: 1.2rem;
     color: grey;
     font-family: 'Nanum Gothic', sans-serif;
 }
 .formInput {
+    font-size: 1.2rem;
     padding: 1rem;
-    margin: 0.4rem;
+    margin-bottom: 0.7rem;
     border: none;
     border-bottom: 1px solid grey;
     box-shadow: 5px 10px 20px grey;
 }
 
 
+.formBtns {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    border: none;
+    background-color: white;
+}
 
-/* event class */
+#LoginBtnContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+    align-self: center;
+}
+
+.btnRegister {
+    color: grey;
+}
+.btnSubmit {
+    font-weight: bold;
+    color:  #ED4C67;
+}
+
+
+/* footer */
+#FooterContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:1rem;
+    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+}
+.footerContents {
+    margin: 0px;
+    font-size: 0.5rem;
+}
+.Footertitle {
+    font-family: 'Nanum Gothic', sans-serif; 
+    margin: 0.3rem;
+}
+
+
+
+/* event classList */
 .clickedBtn {
     color: #ED4C67;
 }
+
+.displayNone {
+    display: none;
+}
+
+/* Login form validation event classList */
+.confirmed {
+    font-weight: bold;
+    color: green;
+}
+
+.notConfirmed {
+    font-weight: bold;
+    color: red;
+}
+
+
+
 /* font-family: 'Fira Sans', sans-serif;
 font-family: 'Nanum Gothic', sans-serif; */

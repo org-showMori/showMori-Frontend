@@ -26,45 +26,54 @@ function LoginPage(props) {
     event.preventDefault();
 
     let body = {
-      id: Id,
+      user_id: Id,
       password: Password,
     };
-
+    // // response : {
+    //   user_id: "",
+    //   sucess: "true" / "false"
+    // }
     dispatch(loginUser(body)).then((response) => {
-      if (response.payload.loginSuccess) {
-        //로그인에 성공한 경우
-        props.history.push("/MainBodyPage"); //페이지 이동!!
+      console.log(response);
+
+      if(response.payload.success === "true") {
+        alert("로그인에 성공하셨습니다.");
+        props.history.push('/');
       } else {
-        alert("Eroor");
+        alert("아이디 또는 비밀번호가 틀렸습니다.");
       }
     });
   };
 
   return (
-    <div className="userFormContainer">
+    <div className="userFormContainer" >
       <p className="userFormTitle">Log in</p>
 
       <form onSubmit={onSubmitHandler}>
-        <label className="formLabel">ID</label>
-        <input
-          type="text"
-          className="formInput"
-          value={Id}
-          onChange={onIdHandler}
-        />
-        <label className="formLabel">Password</label>
-        <input
-          type="password"
-          autoComplete="off"
-          value={Password}
-          className="formInput"
-          onChange={onPasswordHandler}
-        />
-        <div className="formBtns">
-          <button onClick={onRegisterHandler} className="btnRegister">
+        <div className="inputContainer">
+          <label className="formLabel">ID</label>
+          <input
+            type="text"
+            className="formInput"
+            value={Id}
+            onChange={onIdHandler}
+          />
+        </div>
+        <div className="inputContainer">
+          <label className="formLabel">Password</label>
+          <input
+            type="password"
+            autoComplete="off"
+            value={Password}
+            className="formInput"
+            onChange={onPasswordHandler}
+          />
+        </div>
+        <div id="LoginBtnContainer">
+          <button onClick={onRegisterHandler} className="formBtns btnRegister">
             Go to Sign Up!
           </button>
-          <button type="submit" className="btnSubmit">
+          <button type="submit" className="formBtns btnSubmit ">
             LOGIN
           </button>
         </div>

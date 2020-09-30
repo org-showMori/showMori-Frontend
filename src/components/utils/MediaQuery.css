@@ -1,0 +1,78 @@
+/* mobile L */
+@media screen and (max-width: 500px) {
+    .searchBarDiv {
+        display: none;
+    }
+    .menuBtn,
+    #userMenu {
+        display: none;
+    }
+    #dropDownImg {
+        display: block;
+        width: 3rem;
+    }
+} 
+
+/* tablet  */
+@media screen and (min-width: 501px) {
+    .searchBarDiv {
+        justify-content: flex-end;
+    }
+    .searchInput {
+        padding: 0.5rem 0.7rem;
+        width: 10%;
+    }
+    .searchBarDiv form {
+        justify-content: flex-end;
+    }
+    #dropDownImg {
+        display: block;
+        width: 3.5rem;
+    }
+    #menu {
+        display: none;
+    }
+  
+
+}
+
+/* laptop */
+@media screen and (min-width:767px) {
+    
+    #dropDownImg {
+        display: block;
+        width: 3.5rem;
+    }
+    .searchBarDiv form {
+        justify-content: center;
+    }
+    #dropDownImg {
+        display: none;
+    }
+    #menu {
+        width: 30%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        font-size: 1rem;
+        align-items: center;
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    #userMenu {
+        display: flex;
+        width: 60%;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+}
+
+/* over laptop */
+@media screen and (min-width:1025px) {
+    
+    .searchBarDiv form {
+        justify-content: center;
+    }
+    
+    
+
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MainBodyPage() {
+function PrintPostPage() {
     return (
         <div>
             포스트 출력되는 곳
@@ -9,4 +9,4 @@ function MainBodyPage() {
     );
 }
 
-export default MainBodyPage;
+export default PrintPostPage;

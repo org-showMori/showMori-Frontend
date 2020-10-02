@@ -2,32 +2,30 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   registerUser,
-  validateOverlapUser,
   checkOverlapUser,
 } from "../../../_actions/userAction.js";
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
   const [Id, setId] = useState("");
-  const [Pw, setPw] = useState("");
+  const [Password, setPassword] = useState("");
   const [ConfirmPw, setConfirmPw] = useState("");
   const [Name, setName] = useState("");
   const [Phone, setPhone] = useState("");
-  let currentConfirmPw = "";
-  let overlapState = false;
+  let overlap = false;
 
   const onIdHandler = (e) => {
     setId(e.currentTarget.value);
   };
-
+  
   const validateOverlap = () => {
-    const IdRegex = /^[a-zA-Z0-9]{4,12}$/;
+    
+    const idRegex = /^[a-zA-Z0-9]{4,12}$/;
 
-    if (!IdRegex.test(Id)) {
-      alert("아이디를 다시 입력해주세요.");
-      return false;
+    if(idRegex.test(Id)) {
+      return true;
     } else {
-      overlapState = true;
+      return false;
     }
 
     let body = {
@@ -41,18 +39,12 @@ function RegisterPage(props) {
 
     //   }
     // })
-  };
-  const onPwHandler = (e) => {
-    setPw(e.currentTarget.value);
-  };
+  }; //아이디 중복여부 체크
 
-  const onConfirmPwHandler = (e) => {
-    setConfirmPw(e.currentTarget.value);
-    currentConfirmPw += e.currentTarget.value;
-
+  const checkConfirmPw = (currentConfirmPw, compare) => {
     const checkConfirmPw = document.getElementById("alertConfirmPw");
 
-    if (currentConfirmPw === Pw) {
+    if (currentConfirmPw === compare) {
       checkConfirmPw.classList.remove("notConfirmed");
       checkConfirmPw.classList.add("confirmed");
       checkConfirmPw.innerText = "비밀번호 확인이 완료되었습니다.";
@@ -61,6 +53,23 @@ function RegisterPage(props) {
       checkConfirmPw.classList.add("notConfirmed");
       checkConfirmPw.innerText = "비밀번호 확인이 되지 않습니다.";
     }
+  }
+
+  
+  const onPwHandler = (e) => {
+    setPassword(e.currentTarget.value);
+
+    let currentConfirmPw = "";
+    currentConfirmPw += e.currentTarget.value;
+    checkConfirmPw(currentConfirmPw, ConfirmPw);
+  };
+
+  const onConfirmPwHandler = (e) => {
+    setConfirmPw(e.currentTarget.value);
+
+    let currentConfirmPw = "";
+    currentConfirmPw += e.currentTarget.value;
+    checkConfirmPw(currentConfirmPw, Password);
   };
 
   const onNameHandler = (e) => {
@@ -69,17 +78,45 @@ function RegisterPage(props) {
   const onPhoneHandler = (e) => {
     setPhone(e.currentTarget.value);
   };
+
+  const regexState = (regex, text, state) => {
+
+    if(!regex.test(state)) {
+      alert(`${text.name} 입력 형식을 확인해주세요.`);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (!overlapState) {
-      alert("아이디 중복확인을 해주세요.");
+    // 유효성 체크
+    if(!validateOverlap()) {
+      alert('아이디 입력 형식을 확인해주세요.');
       return false;
     }
 
+    if(ConfirmPw !== Password) {
+      alert(`비밀번호 확인을 해주세요.`);
+      return false;
+    }
+
+    const nameRegex = /^[가-힣a-zA-Z]+$/;
+    const phoneRegex = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
+    const checkName = document.getElementById("inputName");
+    const checkPhone = document.getElementById("inputPhone");
+
+    if(!regexState(nameRegex, checkName, Name) ||
+      !regexState(phoneRegex, checkPhone, Phone)) 
+     { return false;}
+
+    // request to server
     let body = {
       user_id: Id,
-      password: Pw,
+      password: Password,
       user_name: Name,
       user_phone: Phone,
     };
@@ -87,13 +124,6 @@ function RegisterPage(props) {
     dispatch(registerUser(body)).then((response) => {
       console.log(response);
     });
-  };
-
-  const validatePhone = () => {
-    if (isNaN(Phone)) {
-      alert("전화번호는 숫자만 입력 가능합니다.");
-      return false;
-    }
   };
 
   return (
@@ -113,12 +143,13 @@ function RegisterPage(props) {
             onChange={onIdHandler}
             required
           />
-          <input
+          {/* <input
             type="button"
+            id="inputId"
             value="중복확인"
             className="formBtns"
             onClick={validateOverlap}
-          />
+          /> */}
         </div>
 
         <div className="inputContainer" id="containerPw">
@@ -128,8 +159,9 @@ function RegisterPage(props) {
           </p>
           <input
             className="formInput"
+            id="inputPw"
             type="password"
-            value={Pw}
+            value={Password}
             onChange={onPwHandler}
             required
           />
@@ -144,7 +176,7 @@ function RegisterPage(props) {
             onChange={onConfirmPwHandler}
             required
           />
-          <p className="notConfirmed altValidInputs" id="alertConfirmPw">
+          <p className="notConfirmed altValidInputs" name="비밀번호" id="alertConfirmPw">
             비밀번호 확인이 되지 않습니다.
           </p>
         </div>
@@ -156,6 +188,8 @@ function RegisterPage(props) {
           </p>
           <input
             className="formInput"
+            id="inputName"
+            name="이름"
             type="text"
             value={Name}
             onChange={onNameHandler}
@@ -165,15 +199,17 @@ function RegisterPage(props) {
 
         <div className="inputContainer" id="containerPhone">
           <p className="altValidInputs">
-            <label className="formLabel">전화번호</label>- 자를 제외한 숫자만
-            입력해주세요.
+            <label className="formLabel">전화번호</label>
           </p>
           <input
             className="formInput"
+            id="inputPhone"
+            name="전화번호"
             type="text"
             value={Phone}
             onChange={onPhoneHandler}
             required
+            placeholder="010-1234-1234"
           />
           {/* <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" /> */}
         </div>

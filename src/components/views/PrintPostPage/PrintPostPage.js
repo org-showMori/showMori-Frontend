@@ -1,9 +1,10 @@
 import React from 'react';
+import Banner from '../Banner/Banner';
 
 function PrintPostPage() {
     return (
-        <div>
-            포스트 출력되는 곳
+        <div id="printPostContainer">
+            <Banner />
         </div>
 
     );

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  registerUser,
-  checkOverlapUser,
+  registerUser
 } from "../../../_actions/userAction.js";
 
 function RegisterPage(props) {
@@ -26,18 +25,6 @@ function RegisterPage(props) {
     } else {
       return false;
     }
-
-    let body = {
-      user_id: Id,
-    };
-
-    // dispatch(checkOverlapUser(body)).then((response) => {
-    //   if(response.payload.success === "true") {
-    //     alert("사용가능한 아이디입니다.");
-    //   } else {
-
-    //   }
-    // })
   }; //아이디 중복여부 체크
 
   const checkConfirmPw = (currentConfirmPw, compare) => {
@@ -122,6 +109,15 @@ function RegisterPage(props) {
 
     dispatch(registerUser(body)).then((response) => {
       console.log(response);
+
+      if(!response.payload.validate) {
+        alert("중복된 아이디입니다. 다시 입력해주세요.");
+      } 
+      if(response.payload.validate && response.payload.success) {
+        alert(`${Id}님, 환영합니다.`);
+        props.history.push("/LoginPage");
+      }
+
     });
   };
 
@@ -142,13 +138,6 @@ function RegisterPage(props) {
             onChange={onIdHandler}
             required
           />
-          {/* <input
-            type="button"
-            id="inputId"
-            value="중복확인"
-            className=000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"formBtns"
-            onClick={validateOverlap}
-          /> */}
         </div>
 
         <div className="inputContainer" id="containerPw">
@@ -210,12 +199,10 @@ function RegisterPage(props) {
             required
             placeholder="010-1234-1234"
           />
-          {/* <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" /> */}
         </div>
 
-        <button type="submit" className="formBtns btnSubmit">
-          submit
-        </button>
+        <input type="submit" value="submit" className="formBtns btnSubmit" />
+          
       </form>
     </div>
   );

@@ -9,11 +9,11 @@ import { SESSION_ID} from "../../utils/SessionTypes";
 
 function LoginPage(props) {
   const dispatch = useDispatch();
-  const [Id, setID] = useState("");
+  const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
 
   const onIdHandler = (event) => {
-    setID(event.currentTarget.value);
+    setId(event.currentTarget.value);
   };
 
   const onPasswordHandler = (event) => {
@@ -22,7 +22,7 @@ function LoginPage(props) {
 
   const onRegisterHandler = (event) => {
     event.preventDefault();
-    props.history.push("/RegisterPage");
+    props.history.push("/register");
   };
 
   const onSubmitHandler = (event) => {
@@ -42,9 +42,9 @@ function LoginPage(props) {
     // }
     dispatch(loginUser(body)).then((response) => {
       console.log(response);
-      
+      // response.payload.success
       if(response.payload.success) {
-        setID(response.payload.user_id);
+        setId(response.payload.user_id);
         doSession();
       } else {
         alert('아이디 또는 비밀번호 입력이 잘못 됐습니다.');
@@ -55,7 +55,7 @@ function LoginPage(props) {
 
   const doSession = () => {
     const tempId = Id;
-    window.sessionStorage.setItem(SESSION_ID,tempId);
+    window.sessionStorage.setItem(SESSION_ID, tempId);
     alert(`${tempId}님 반갑습니다.`);
     window.location.replace('/PrintPostPage');
    

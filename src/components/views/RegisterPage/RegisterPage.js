@@ -16,7 +16,7 @@ function RegisterPage(props) {
     setId(e.currentTarget.value);
   };
   
-  const validateOverlap = () => {
+  const checkIdRegex = () => {
     
     const idRegex = /^[a-zA-Z0-9]{4,12}$/;
 
@@ -25,7 +25,7 @@ function RegisterPage(props) {
     } else {
       return false;
     }
-  }; //아이디 중복여부 체크
+  }; //아이디 유효성검사
 
   const checkConfirmPw = (currentConfirmPw, compare) => {
     const checkConfirmPw = document.getElementById("alertConfirmPw");
@@ -80,7 +80,7 @@ function RegisterPage(props) {
     e.preventDefault();
 
     // 유효성 체크
-    if(!validateOverlap()) {
+    if(!checkIdRegex()) {
       alert('아이디 입력 형식을 확인해주세요.');
       return false;
     }
@@ -115,7 +115,7 @@ function RegisterPage(props) {
       } 
       if(response.payload.validate && response.payload.success) {
         alert(`${Id}님, 환영합니다.`);
-        props.history.push("/LoginPage");
+        props.history.push("/login");
       }
 
     });

@@ -1,10 +1,10 @@
 import axios from "axios";
 import { FUNDING_URL, SEARCH_URL } from "./type";
-import { HEADER, FUNDINGS, KEYWORDS } from "./type.js";
+import { FUNDINGS, KEYWORDS } from "./type.js";
 
 export function getFunding(dataToSubmit) {
   const request = axios
-    .post(FUNDING_URL, dataToSubmit, HEADER)
+    .get(FUNDING_URL, dataToSubmit)
     .then((response) => response.data);
 
   return {
@@ -15,7 +15,7 @@ export function getFunding(dataToSubmit) {
 
 export function getKeywordFunding(dataToSubmit) {
   const request = axios
-    .post(SEARCH_URL, dataToSubmit, HEADER)
+    .post(SEARCH_URL, dataToSubmit)
     .then((response) => response.data);
 
   return {

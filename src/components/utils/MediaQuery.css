@@ -1,8 +1,5 @@
 /* mobile L */
 @media screen and (max-width: 500px) {
-    #bodyPage {
-        height: 270vmin;
-    }
     .searchBarDiv {
         display: none;
     }
@@ -22,14 +19,15 @@
     li {
         margin-bottom: 1vmin;
     }
-    
+    #bannerContents {
+        align-items: center;
+    }
 } 
 
 /* tablet  */
 @media screen and (min-width: 501px) {
-    #bodyPage {
-        height: 270vmin;
-    }
+
+
     .searchBarDiv {
         justify-content: flex-end;
     }
@@ -55,9 +53,7 @@
 /* laptop */
 @media screen and (min-width:767px) {
     
-    #bodyPage {
-        height: 170vmin;
-    }
+
     .searchBarDiv form {
         justify-content: center;
     }
@@ -87,9 +83,7 @@
 
 /* over laptop */
 @media screen and (min-width:1025px) {
-    #bodyPage {
-        height: 170vmin;
-    }
+
     .searchBarDiv form {
         justify-content: center;
     }

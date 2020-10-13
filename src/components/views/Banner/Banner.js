@@ -6,7 +6,7 @@ class Banner extends React.Component {
       <div id="bannerContainer">
         <div id="bannerContents">
           <h2 className="bannerTitle">
-            CROWD FUNDING <b>SHOW-MORI</b>
+            CROWD FUNDING SHOW-MORI
           </h2>
           <p>
             크라우드 펀딩을 통한 후원형 공연 온라인 플랫폼 SHOW-MORI입니다.</p>

@@ -58,7 +58,8 @@ ul {
     margin: 3rem 0px;
     padding: 5rem 0;
     width: 100%;
-    background-image: url('./components/views/Banner/mainpicture.jpg');
+    background-image: url("./components/views/Banner/mainpicture.jpg");
+    height: 10%;
 }
 
 #bannerContents {
@@ -70,14 +71,23 @@ ul {
 
 .bannerTitle {
     font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    font-weight: 100;
+    color: #ED4C67;
 }
 
+#bannerContents p {
+    color: #fce3f7;
+    font-family: 'Nanum Gothic', sans-serif;
+    text-align: center;
+}
 
 
 
 /* body part */
 
 #bodyPage {
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -156,6 +166,15 @@ ul {
     color:  #ED4C67;
 }
 
+/* printPostPage - Main */
+.printPostsPageContainer {
+    width: 100%;
+    height: 100%;
+}
+.printPostsContainer {
+    width: 100%;
+    height: 90%;
+}
 
 /* footer */
 #FooterContainer {
@@ -163,6 +182,7 @@ ul {
     flex-direction: column;
     align-items: center;
     padding:1rem;
+    margin-top: 20vmin;
     border-top: 0.5px solid black;
     border-bottom: 0.5px solid black;
 }
@@ -221,7 +241,20 @@ a:hover {
     color: black;
 }
 
-
+/* mainPage - postCard */
+.postCardContainer {
+    padding: 20vmin;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    display: flex;
+}
+.postCard {
+    border: 1px solid #D9D9D9;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 
 

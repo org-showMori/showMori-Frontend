@@ -19,7 +19,7 @@ function UnRegisterPage(props) {
       if (res.payload.success) {
         window.sessionStorage.removeItem(SESSION_ID);
         alert("회원탈퇴가 완료되었습니다.");
-        window.location.replace("/");
+        window.location.replace("/posts");
         return false;
       } else {
         alert("회원탈퇴에 실패하였습니다.");

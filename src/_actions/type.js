@@ -1,7 +1,7 @@
 import {SESSION_ID} from "../components/utils/SessionTypes";
 
 const currentId = window.sessionStorage.getItem(SESSION_ID);
-export const BE_URL = "http://bad65394b4f1.ngrok.io";
+export const BE_URL = "http://dbd3065010da.ngrok.io";
 
 
 export const LOGIN_URL = `${BE_URL}/api/users/login`;
@@ -21,9 +21,11 @@ export const SEARCH_URL = `${BE_URL}/api/funding/`;
 export const KEYWORDS = "keywords";
 export const INFOFUNDING_URL = `${BE_URL}/api/funding/`;
 export const INFOFUNDING = "info_funding";
+export const NEW_FUNDING_URL = `${BE_URL}/api/funding/posting`;
+export const NEW_FUNDING = "new_funding";
 
 
-// export const HEADER = {
-//   "content-type": "application/json",
-//   "Access-Control-Allow-Origin": "*",
-// }; 
+export const HEADER = {
+  "content-type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+}; 

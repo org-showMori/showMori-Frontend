@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {infoFunding} from '../../../_actions/fundingAction';
+import React from 'react';
+// import {useDispatch} from 'react-redux';
+// import {infoFunding} from '../../../_actions/fundingAction';
 
 const donationRate = (goalsum, currentDonation) => {
     return ((currentDonation/goalsum) * 100).toFixed(1) ;
@@ -21,33 +21,35 @@ const calculatDday = (dday) => {
 
 
 function PostCard(props) {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const currentTitle = props.title ;
-    const currentPoster = props.poster ;
+    const currentPoster = props.posterImg ;
     const currentGoalSum = props.goalsum ;
     const currentTotalDonation = props.totalDonation ;
     const currentDeadLine = props.deadLine;
-    const currentPostId = props.postId ;
-    const [PostId, setPostId] = useState(currentPostId);
+    // const currentPostId = props.postId ;
+    // const [PostId, setPostId] = useState(currentPostId);
+    //  const img = document.getElementById("imgid");
 
-
-    const onClickHandler = (e) => {
-        let body = {};
-        console.log("div클릭");
-        // dispatch(infoFunding(body, PostId)).then((response) => {
-        //     console.log(response);
-        //     props.history.push(`/posts/${PostId}`);
-        // })
-    }
+    // const onClickHandler = (e) => {
+    //     let body = {};
+    //     console.log("div클릭");
+    //     // dispatch(infoFunding(body, PostId)).then((response) => {
+    //     //     console.log(response);
+    //     //     props.history.push(`/posts/${PostId}`);
+    //     // })
+    // }
 
     console.log(props);
+
+
     return (
-        <div className="postCard" onClick={onClickHandler}>
-            {/* <img src='currentPoster' /> */}
-            <p>{currentTitle}</p>
-            <p>{currentGoalSum-currentTotalDonation}원 남음 <b>
+        <div className="postCard" >
+          <img src={currentPoster} alt="poster" id="cardImg"/>
+            <p className="cardTitle" className="cardTitle">{currentTitle}</p>
+            <p className="cardLeftMoney" className="cardContents">{currentGoalSum-currentTotalDonation}원 남음 <b className="cardBold">
             {donationRate(currentGoalSum, currentTotalDonation)}%</b></p>
-            <p>마감까지 D-{calculatDday(currentDeadLine)}일</p>
+            <p className="cardDday" className="cardContents">마감까지 <b className="cardBold">D-{calculatDday(currentDeadLine)}일</b></p>
         </div>
     );
 }

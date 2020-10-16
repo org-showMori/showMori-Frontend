@@ -1,13 +1,32 @@
 import axios from "axios";
-import { FUNDING_URL, SEARCH_URL, INFOFUNDING_URL } from "./type";
-import { FUNDINGS, KEYWORDS, INFOFUNDING } from "./type.js";
+import { 
+  FUNDING_URL, 
+  SEARCH_URL, 
+  INFOFUNDING_URL,
+  NEW_FUNDING_URL } from "./type";
+import { 
+  FUNDINGS, 
+  KEYWORDS, 
+  INFOFUNDING,
+  NEW_FUNDING,
+  HEADER } from "./type.js";
 
-const header = {
-  'content-type': 'multipart/form-data'
+
+export function newFunding(dataToSubmit) {
+  const request = axios
+    .post(NEW_FUNDING_URL, dataToSubmit)
+    .then((response) => response.data);
+
+    return {
+      type: NEW_FUNDING,
+      payload: request,
+    }
 }
+
+
 export function getFunding(dataToSubmit) {
   const request = axios
-    .get(FUNDING_URL, dataToSubmit)
+    .get(FUNDING_URL, dataToSubmit, HEADER)
     .then((response) => response.data);
 
   return {

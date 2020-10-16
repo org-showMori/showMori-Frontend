@@ -3,15 +3,16 @@ import { useDispatch } from "react-redux";
 import Banner from "../Banner/Banner";
 import { getFunding } from "../../../_actions/fundingAction";
 import PostCard from "./PostCard";
+import {HEADER} from "../../../_actions/type";
 
 function PrintPostPage() {
   const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
-
   const newDate = new Date();
   const year = newDate.getFullYear();
   const month = newDate.getMonth() + 1;
   const date = newDate.getDate();
+  const IMG_SRC = "data:image/jpeg;base64,";
 
   useEffect(() => {
     console.log("useEffect 시작");
@@ -30,12 +31,10 @@ function PrintPostPage() {
       setPostList(
         response.payload.post.map((e, i) => {
           console.log(e);
-          let src = "data:image/jpeg;base64,";
-          src += e.poster;
           return (
             <PostCard
               title={e.title}
-              poster={src}
+              posterImg={`${IMG_SRC}${e.image}`}
               goalsum={e.goal_sum}
               totalDonation={e.total_donation}
               deadLine={e.dead_line}

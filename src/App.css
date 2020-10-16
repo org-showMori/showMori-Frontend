@@ -9,6 +9,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20vmin;
 }
 #main {
     width: 60vmin;
@@ -42,6 +43,12 @@ header {
 .searchBarDiv button {
     width: 8vmin;
     height: 4vmin;
+}
+.dropdownMenu {
+    width: 50%;
+}
+.menuContainer {
+    width: 100%;
 }
 ul {
     list-style-type: none;
@@ -87,11 +94,11 @@ ul {
 /* body part */
 
 #bodyPage {
-    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    padding-top: 10vmin;
 }
 
 /*Log in*/
@@ -188,7 +195,7 @@ ul {
 }
 .footerContents {
     margin: 0px;
-    font-size: 0.5rem;
+    font-size: 1.6vmin;
 }
 .Footertitle {
     font-family: 'Nanum Gothic', sans-serif; 
@@ -243,20 +250,44 @@ a:hover {
 
 /* mainPage - postCard */
 .postCardContainer {
-    padding: 20vmin;
+    padding: 5vmin 10vmin;
     justify-content: space-around;
     flex-flow: row wrap;
     display: flex;
 }
 .postCard {
-    border: 1px solid #D9D9D9;
+    padding: 1rem;
+    /* border: 1px solid #D9D9D9; */
     width: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 1rem;
+    height: 100%;
+}
+.cardImgContainer {
+    width: 100%;
+    height: auto;
+}
+#cardImg {
+    width: 100%;
+    height: 70%;
+    margin: 1rem;
 }
 
+.cardTitle {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 2rem;
+    margin: 0;
+    font-weight: bold;
+}
 
+/* make new funding page /fundings */
+.newFundingContainer,
+.fundingInfoContainer {
+    display: flex;
+    flex-direction: column;
+}
 
 /* event classList */
 .clickedBtn {
@@ -286,4 +317,5 @@ a:hover {
 
 /* font-family: 'Fira Sans', sans-serif;
 font-family: 'Nanum Gothic', sans-serif; 
-font-family: 'Bangers', cursive; */
+font-family: 'Bangers', cursive;
+font-family: 'Noto Serif KR', serif; */

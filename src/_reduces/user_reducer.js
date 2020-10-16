@@ -1,7 +1,9 @@
 import {
     LOGIN_USER,
     REGISTER_USER,
-    CHECK_OVERLAP_USER
+    BEFORE_MODIFY_USER,
+    MODIFY_USER,
+    UNREGISTER_USER
 } from '../_actions/type';
 
 //previousState, action을 nextState로 만듦
@@ -13,9 +15,13 @@ export default function (state= {}, action) {
             // user_action.js에서의 payload를 loginSuccess에 넣어줌
         case REGISTER_USER:
             return { ...state, register: action.payload };
-        case CHECK_OVERLAP_USER:
+        case BEFORE_MODIFY_USER:
             return {...state, success: action.payload};
 
+        case MODIFY_USER:
+            return {...state, success: action.payload};
+        case UNREGISTER_USER:
+            return {...state, succes: action.payload};
         default:
             return state;
     }

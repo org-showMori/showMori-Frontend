@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { loginUser } from "../../../_actions/userAction";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { SESSION_ID} from "../../utils/SessionTypes";
 
 // import {useDispatch} from 'react-redux';
 
+
 function LoginPage(props) {
   const dispatch = useDispatch();
-  const [Id, setID] = useState("");
+  const [Id, setId] = useState("");
   const [Password, setPassword] = useState("");
 
   const onIdHandler = (event) => {
-    setID(event.currentTarget.value);
+    setId(event.currentTarget.value);
   };
 
   const onPasswordHandler = (event) => {
@@ -19,7 +21,8 @@ function LoginPage(props) {
   };
 
   const onRegisterHandler = (event) => {
-    props.history.push("/RegisterPage");
+    event.preventDefault();
+    props.history.push("/register");
   };
 
   const onSubmitHandler = (event) => {
@@ -29,24 +32,37 @@ function LoginPage(props) {
       user_id: Id,
       password: Password,
     };
+
+    // setID(Id);
+    // doSession();
+
     // // response : {
     //   user_id: "",
     //   sucess: "true" / "false"
     // }
     dispatch(loginUser(body)).then((response) => {
       console.log(response);
-
-      if(response.payload.success === "true") {
-        alert("로그인에 성공하셨습니다.");
-        props.history.push('/');
+      // response.payload.success
+      if(response.payload.success) {
+        setId(response.payload.user_id);
+        doSession();
       } else {
-        alert("아이디 또는 비밀번호가 틀렸습니다.");
+        alert('아이디 또는 비밀번호 입력이 잘못 됐습니다.');
       }
+     
     });
   };
 
+  const doSession = () => {
+    const tempId = Id;
+    window.sessionStorage.setItem(SESSION_ID, tempId);
+    alert(`${tempId}님 반갑습니다.`);
+    window.location.replace('/PrintPostPage');
+   
+  };
+
   return (
-    <div className="userFormContainer" >
+    <div className="userFormContainer">
       <p className="userFormTitle">Log in</p>
 
       <form onSubmit={onSubmitHandler}>
@@ -57,6 +73,7 @@ function LoginPage(props) {
             className="formInput"
             value={Id}
             onChange={onIdHandler}
+            required
           />
         </div>
         <div className="inputContainer">
@@ -67,15 +84,12 @@ function LoginPage(props) {
             value={Password}
             className="formInput"
             onChange={onPasswordHandler}
+            required
           />
         </div>
         <div id="LoginBtnContainer">
-          <button onClick={onRegisterHandler} className="formBtns btnRegister">
-            Go to Sign Up!
-          </button>
-          <button type="submit" className="formBtns btnSubmit ">
-            LOGIN
-          </button>
+          <input type="button" value="Go to Sign Up!" onClick={onRegisterHandler} className="formBtns btnRegister" />
+          <input type="submit" value="LOGIN" className="formBtns btnSubmit "/>
         </div>
       </form>
     </div>

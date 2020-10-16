@@ -1,13 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import HeaderPage from "../Header/Header";
 import "../../../App.css";
 import "../../utils/MediaQuery.css";
+
+import HeaderPage from "../Header/Header";
+import PrintPostPage from '../PrintPostPage/PrintPostPage';
 import FundingPage from "../FundingPage/FundingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
-import PrintPostPage from "../PrintPostPage/PrintPostPage";
+import MyPage from "../MyPage/MyPage";
+
+
 
 function MainPage() {
   return (
@@ -15,13 +19,15 @@ function MainPage() {
       <HeaderPage />
       <div id="bodyPage">
         <Switch>
-            <Route path="/PrintPostPage" component={PrintPostPage} />
-          <Route path="/FundingPage" component={FundingPage} />
-          <Route path="/LoginPage" component={LoginPage} />
-          <Route path="/RegisterPage" component={RegisterPage} />
+          <Route path="/posts" component={PrintPostPage} />
+          <Route path="/fundings" component={FundingPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/users" component={MyPage} />
         </Switch>
       </div>
     </Router>
+
   );
 }
 

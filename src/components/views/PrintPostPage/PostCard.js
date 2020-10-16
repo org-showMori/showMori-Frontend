@@ -5,7 +5,7 @@ import React from 'react';
 const donationRate = (goalsum, currentDonation) => {
     return ((currentDonation/goalsum) * 100).toFixed(1) ;
 }
-const calculatDday = (dday) => {
+const calculateDday = (dday) => {
     const newDate = new Date();
     const year = newDate.getFullYear();
     const month = newDate.getMonth() + 1;
@@ -40,16 +40,15 @@ function PostCard(props) {
     //     // })
     // }
 
-    console.log(props);
 
 
     return (
         <div className="postCard" >
-          <img src={currentPoster} alt="poster" id="cardImg"/>
-            <p className="cardTitle" className="cardTitle">{currentTitle}</p>
-            <p className="cardLeftMoney" className="cardContents">{currentGoalSum-currentTotalDonation}원 남음 <b className="cardBold">
+          <img src={currentPoster} alt="poster" className="cardImg"/>
+            <p className="cardTitle cardTitle">{currentTitle}</p>
+            <p className="cardLeftMoney cardContents">{currentGoalSum-currentTotalDonation}원 남음 <b className="cardBold">
             {donationRate(currentGoalSum, currentTotalDonation)}%</b></p>
-            <p className="cardDday" className="cardContents">마감까지 <b className="cardBold">D-{calculatDday(currentDeadLine)}일</b></p>
+            <p className="cardDday cardContents">마감까지 <b className="cardBold">D-{calculateDday(currentDeadLine)}일</b></p>
         </div>
     );
 }

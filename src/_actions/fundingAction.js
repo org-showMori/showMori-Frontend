@@ -1,28 +1,40 @@
 import axios from "axios";
-import { 
-  FUNDING_URL, 
-  SEARCH_URL, 
+import {
+  FUNDING_URL,
+  SEARCH_URL,
   INFOFUNDING_URL,
-  NEW_FUNDING_URL } from "./type";
-import { 
-  FUNDINGS, 
-  KEYWORDS, 
+  NEW_FUNDING_URL,
+  DELETE_FUNDING_URL,
+} from "./type";
+import {
+  FUNDINGS,
+  KEYWORDS,
   INFOFUNDING,
   NEW_FUNDING,
-  HEADER } from "./type.js";
+  DELETE_FUNDING,
+  HEADER,
+} from "./type.js";
 
+export function delFunding(dataToSubmit, postId) {
+  const request = axios
+    .delete(`${DELETE_FUNDING_URL}${postId}`, dataToSubmit)
+    .then((response) => response.data);
+  return {
+    type: DELETE_FUNDING,
+    payload: request,
+  };
+}
 
 export function newFunding(dataToSubmit) {
   const request = axios
     .post(NEW_FUNDING_URL, dataToSubmit)
     .then((response) => response.data);
 
-    return {
-      type: NEW_FUNDING,
-      payload: request,
-    }
+  return {
+    type: NEW_FUNDING,
+    payload: request,
+  };
 }
-
 
 export function getFunding(dataToSubmit) {
   const request = axios
@@ -36,13 +48,14 @@ export function getFunding(dataToSubmit) {
 }
 
 export function infoFunding(dataToSubmit, postId) {
-  const request = axios.get(`${INFOFUNDING_URL}${postId}`, dataToSubmit)
-                      .then((response) => response.data);
+  const request = axios
+    .get(`${INFOFUNDING_URL}${postId}`, dataToSubmit)
+    .then((response) => response.data);
 
   return {
     type: INFOFUNDING,
     payload: request,
-  }
+  };
 }
 
 export function getKeywordFunding(dataToSubmit) {

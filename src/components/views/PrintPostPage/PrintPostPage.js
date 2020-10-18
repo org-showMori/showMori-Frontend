@@ -30,42 +30,51 @@ function PrintPostPage() {
   useEffect(() => {
     console.log("useEffect 시작");
 
-    if (window.localStorage.getItem(LS_FUNDINGS) === null) {
+    let lsFundings = window.localStorage.getItem(LS_FUNDINGS);
+    if ( lsFundings === null || lsFundings === undefined || lsFundings === []) {
       let body = {};
       dispatch(getFunding(body)).then((response) => {
         console.log(response);
         window.localStorage.setItem(
           LS_FUNDINGS,
-          JSON.stringify(response.payload.post)
+          JSON.stringify(response.payload)
         );
+        currentFundingList = window.localStorage.getItem(LS_FUNDINGS);
+        currentFundingList = JSON.parse(currentFundingList);
+        printPostCard(currentFundingList);
       });
-      currentFundingList = window.localStorage.getItem(LS_FUNDINGS);
-      currentFundingList = JSON.parse(currentFundingList);
+     
     } else {
       currentFundingList = window.localStorage.getItem(LS_FUNDINGS);
       let finishedIndex = [];
       currentFundingList = JSON.parse(currentFundingList);
 
-      currentFundingList.map((e, i) => {
-        if (calculateDday(e.dead_line) < 0) {
-          finishedIndex.push(i);
+      currentFundingList.map((e) => {
+        if (calculateDday(e.dead_line) === 22) {
           //  펀딩종료된 펀딩 삭제 - server side (request)
           let body = {
             post_id: e.post_id,
           };
           dispatch(delFunding(body, e.post_id)).then((response) => {
             console.log(response);
+            const deletedFundingId = Number(response.payload.user_id);
+            finishedIndex.push(deletedFundingId);
+             //펀딩종료된 펀딩 삭제 - client side
+            currentFundingList = currentFundingList.filter(
+              (e) => !finishedIndex.includes(e.post_id)
+            );
+            console.log(currentFundingList);
+            window.localStorage.setItem(LS_FUNDINGS, JSON.stringify(currentFundingList));
+            
           });
         }
+        printPostCard(currentFundingList);
         return finishedIndex;
       });
-      //펀딩종료된 펀딩 삭제 - client side
-      currentFundingList = currentFundingList.filter(
-        (e, i) => !finishedIndex.includes(i)
-      );
-     
     }
+  }, []);
 
+  const printPostCard = (currentFundingList) => {
     setPostList(
       currentFundingList.map((e, i) => {
         return (
@@ -81,7 +90,7 @@ function PrintPostPage() {
         );
       })
     );
-  }, []);
+  }
 
   return (
     <div className="printPostsPageContainer">

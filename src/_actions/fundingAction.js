@@ -17,7 +17,7 @@ import {
 
 export function delFunding(dataToSubmit, postId) {
   const request = axios
-    .delete(`${DELETE_FUNDING_URL}${postId}`, dataToSubmit)
+    .delete(`${DELETE_FUNDING_URL}${postId}/delete`, dataToSubmit)
     .then((response) => response.data);
   return {
     type: DELETE_FUNDING,

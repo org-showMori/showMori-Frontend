@@ -79,7 +79,13 @@ function FundingPage() {
   const onLastDayHandler = (e) => {};
   const onGoalSumHandler = (e) => {};
   const onDeadLineHandler = (e) => {};
-  const onAddRewardHandler = (e) => {};
+  const onAddRewardHandler = (e) => {
+    console.log(e.currentTarget.value);
+    // const rewardContainer = document.querySelector(".rewardContainer");
+    // const newReward = document.createElement('p');
+    
+
+  };
 
 
   return (
@@ -138,11 +144,11 @@ function FundingPage() {
               onChange={onGoalSumHandler}
             />
           </p>
-          <div>
+          <div className="rewardContainer">
             <p>
               리워드 <b>* 최소 3개 이상의 리워드가 등록되어야 합니다. *</b>
             </p>
-            <form className="rewardForm" onSubmit={onAddRewardHandler}>
+            <form className="rewardForm" onSubmit={onAddRewardHandler} >
               <label>후원금액</label>
               <input type="number" placeholder="900000" />
               <label>리워드</label>

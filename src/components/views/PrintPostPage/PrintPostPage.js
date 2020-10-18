@@ -31,7 +31,7 @@ function PrintPostPage() {
     console.log("useEffect 시작");
 
     let lsFundings = window.localStorage.getItem(LS_FUNDINGS);
-    if ( lsFundings === null || lsFundings === undefined || lsFundings === []) {
+    if (lsFundings === null || lsFundings === undefined || lsFundings === []) {
       let body = {};
       dispatch(getFunding(body)).then((response) => {
         console.log(response);
@@ -43,14 +43,14 @@ function PrintPostPage() {
         currentFundingList = JSON.parse(currentFundingList);
         printPostCard(currentFundingList);
       });
-     
     } else {
       currentFundingList = window.localStorage.getItem(LS_FUNDINGS);
       let finishedIndex = [];
       currentFundingList = JSON.parse(currentFundingList);
 
       currentFundingList.map((e) => {
-        if (calculateDday(e.dead_line) === 22) {
+        
+        if (calculateDday(e.dead_line) < 0) {
           //  펀딩종료된 펀딩 삭제 - server side (request)
           let body = {
             post_id: e.post_id,
@@ -59,18 +59,22 @@ function PrintPostPage() {
             console.log(response);
             const deletedFundingId = Number(response.payload.user_id);
             finishedIndex.push(deletedFundingId);
-             //펀딩종료된 펀딩 삭제 - client side
+            //펀딩종료된 펀딩 삭제 - client side
             currentFundingList = currentFundingList.filter(
               (e) => !finishedIndex.includes(e.post_id)
             );
             console.log(currentFundingList);
-            window.localStorage.setItem(LS_FUNDINGS, JSON.stringify(currentFundingList));
-            
+            window.localStorage.setItem(
+              LS_FUNDINGS,
+              JSON.stringify(currentFundingList)
+            );
+            printPostCard(currentFundingList);
           });
         }
-        printPostCard(currentFundingList);
+
         return finishedIndex;
       });
+      printPostCard(currentFundingList);
     }
   }, []);
 
@@ -90,7 +94,7 @@ function PrintPostPage() {
         );
       })
     );
-  }
+  };
 
   return (
     <div className="printPostsPageContainer">

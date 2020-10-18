@@ -87,7 +87,6 @@ function FundingPage() {
 
   };
 
-
   return (
     <div>
       <p>공연 정보</p>

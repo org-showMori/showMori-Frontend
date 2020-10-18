@@ -50,7 +50,7 @@ function PrintPostPage() {
       currentFundingList = JSON.parse(currentFundingList);
 
       currentFundingList.map((e) => {
-        if (calculateDday(e.dead_line) === 22) {
+        if (calculateDday(e.dead_line) < 0) {
           //  펀딩종료된 펀딩 삭제 - server side (request)
           let body = {
             post_id: e.post_id,
@@ -65,13 +65,13 @@ function PrintPostPage() {
             );
             console.log(currentFundingList);
             window.localStorage.setItem(LS_FUNDINGS, JSON.stringify(currentFundingList));
-            
+            printPostCard(currentFundingList);
           });
         }
-        printPostCard(currentFundingList);
         return finishedIndex;
       });
     }
+    printPostCard(currentFundingList);
   }, []);
 
   const printPostCard = (currentFundingList) => {

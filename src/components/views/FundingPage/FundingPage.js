@@ -5,42 +5,36 @@ import { SESSION_ID } from "../../utils/SessionTypes";
 
 function FundingPage() {
   const dispatch = useDispatch();
-  const userId = window.sessionStorage.getItem(SESSION_ID);
-
-  const [newTitle, setNewTitle] = useState("");
+  // const userId = window.sessionStorage.getItem(SESSION_ID);
+  const userId = "banana";
   const [newPoster, setNewPoster] = useState("");
   const [newPosterImg, setNewPosterImg] = useState("");
-  // const [newStartDate, setNewStartDate] = useState("");
-  // const [newLastDate, setNewLastDate] = useState("");
-  // const [newGoalSum, setNewGoalSum] = useState("");
-  // const [newDeadLine, setNewDeadLine] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  let newStartDate = "";
+  let newLastDate = "";
+  let newGoalSum = 0;
+  let newDeadLine = "";
+  let arrReward = [];
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
     let body = {
       post: {
+        user_id: userId,
         poster: newPoster,
         title: newTitle,
         image: newPosterImg,
         contents: "contents",
-        goal_sum: 1000000,
-        dead_line: "2020-10-31",
-        start_day: "2020-11-01",
-        last_day: "2020-11-10",
-        user_info: {
-          user_id: userId,
-        },
-        reward_list: [
-          {
-            reward_money: 50000,
-            reward: "사랑",
-          },
-        ],
+        goal_sum: newGoalSum,
+        dead_line: newDeadLine,
+        start_day: newStartDate,
+        last_day: newLastDate,
+        reward_list: arrReward,
       },
     };
 
-    console.log(typeof newPosterImg);
+    console.log(body);
 
     dispatch(newFunding(body)).then((response) => {
       console.log(response);
@@ -54,8 +48,6 @@ function FundingPage() {
   const onPosterHandler = (e) => {
     let fileList = e.target.files;
     let file = fileList[0]; //무조건 하나의 파일만 업로드 가능
-    console.log(file.type);
-    console.log(file.name);
     if (!/^image\//.test(file.type)) {
       alert("이미지 파일만 등록 가능합니다.");
       return false;
@@ -70,23 +62,42 @@ function FundingPage() {
     //convert the file to base64 text
     reader.readAsDataURL(file);
     reader.onload = () => {
-      console.log(reader.result);
       setNewPosterImg(reader.result);
     };
   };
 
-  const onStartDayHandler = (e) => {};
-  const onLastDayHandler = (e) => {};
-  const onGoalSumHandler = (e) => {};
-  const onDeadLineHandler = (e) => {};
-  const onAddRewardHandler = (e) => {
-    console.log(e.currentTarget.value);
-    // const rewardContainer = document.querySelector(".rewardContainer");
-    // const newReward = document.createElement('p');
-    
-
+  const onStartDayHandler = (e) => {
+    newStartDate = e.currentTarget.value;
   };
+  const onLastDayHandler = (e) => {
+    newLastDate = e.currentTarget.value;
+  };
+  const onGoalSumHandler = (e) => {
+    newGoalSum = e.currentTarget.value;
+  };
+  const onDeadLineHandler = (e) => {
+    newDeadLine = e.currentTarget.value;
+  };
+  const onAddRewardHandler = (e) => {
+    const rewardContainer = document.querySelector(".rewardContainer");
+    const addDoMoney = rewardContainer.querySelector("#donaMoneyInput").value;
+    const addReward = rewardContainer.querySelector("#rewardInput").value;
+    const rewardObj = {
+      reward_money: addDoMoney,
+      reward: addReward,
+    };
+    arrReward.push(rewardObj);
+    console.log(arrReward);
 
+    const rewardLi = document.createElement('p');
+    const delBtn = document.createElement('input');
+    delBtn.type = "button";
+    delBtn.value = 'X';
+    // delBtn.onClick = {};
+    rewardLi.innerText = `${addDoMoney} | ${addReward}`;
+    rewardLi.appendChild(delBtn);
+    rewardContainer.appendChild(rewardLi);
+  };
 
   return (
     <div>
@@ -148,13 +159,20 @@ function FundingPage() {
             <p>
               리워드 <b>* 최소 3개 이상의 리워드가 등록되어야 합니다. *</b>
             </p>
-            <form className="rewardForm" onSubmit={onAddRewardHandler} >
-              <label>후원금액</label>
-              <input type="number" placeholder="900000" />
-              <label>리워드</label>
-              <input type="text" placeholder="티켓 1장, 팜플렛, 포스터" />
-              <input type="submit" name="submit" value="+" />
-            </form>
+            <label>후원금액</label>
+            <input type="number" placeholder="900000" id="donaMoneyInput" />
+            <label>리워드</label>
+            <input
+              type="text"
+              placeholder="티켓 1장, 팜플렛, 포스터"
+              id="rewardInput"
+            />
+            <input
+              type="button"
+              name="submit"
+              value="+"
+              onClick={onAddRewardHandler}
+            />
           </div>
         </div>
         <div className="fundingContentsContainer inputContainer">

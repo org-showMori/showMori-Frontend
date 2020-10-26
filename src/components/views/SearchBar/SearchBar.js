@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { getKeywordFunding} from "../../../_actions/fundingAction";
+import { searchFunding} from "../../../_actions/fundingAction";
 
 
 function SearchBar(props) {
@@ -13,7 +13,7 @@ function SearchBar(props) {
       keyword : Keyword
     }
 
-    dispatch(getKeywordFunding(body)).then(response => {
+    dispatch(searchFunding(body)).then(response => {
       console.log(response);
     });
 

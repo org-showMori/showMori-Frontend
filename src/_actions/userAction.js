@@ -22,7 +22,7 @@ from "./type";
 
 export function registerUser(dataToSubmit) {
     
-  const request = axios.post(REGISTER_URL, dataToSubmit)
+  const request = axios.put(REGISTER_URL, dataToSubmit)
     .then((response) => response.data);
 
   return {

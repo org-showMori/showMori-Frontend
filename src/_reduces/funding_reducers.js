@@ -3,7 +3,8 @@ import {
     KEYWORDS,
     INFOFUNDING,
     NEW_FUNDING,
-    DELETE_FUNDING
+    DELETE_FUNDING,
+    ALL_POSTID
 } from '../_actions/type';
 
 export default function (state={}, action) {
@@ -17,6 +18,8 @@ export default function (state={}, action) {
         case NEW_FUNDING :
             return { ...state, success: action.payload};
         case DELETE_FUNDING :
+            return { ...state, success: action.payload};
+        case ALL_POSTID:
             return { ...state, success: action.payload};
         default: 
             return state;

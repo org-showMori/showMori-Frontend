@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+
 import "../../../App.css";
 import "../../utils/MediaQuery.css";
 
@@ -19,6 +20,7 @@ function MainPage() {
       <HeaderPage />
       <div id="bodyPage">
         <Switch>
+          <Route exact path="/" component={PrintPostPage} />
           <Route path="/posts" component={PrintPostPage} />
           <Route path="/fundings" component={FundingPage} />
           <Route path="/login" component={LoginPage} />

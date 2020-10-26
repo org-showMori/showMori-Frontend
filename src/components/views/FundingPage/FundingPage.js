@@ -3,29 +3,31 @@ import { useDispatch } from "react-redux";
 import { newFunding } from "../../../_actions/fundingAction";
 import { SESSION_ID } from "../../utils/SessionTypes";
 
-function FundingPage() {
+function FundingPage(props) {
   const dispatch = useDispatch();
-  // const userId = window.sessionStorage.getItem(SESSION_ID);
-  const userId = "banana";
+  const userId = window.sessionStorage.getItem(SESSION_ID);
+  // const userId = "apple";
   const [newPoster, setNewPoster] = useState("");
   const [newPosterImg, setNewPosterImg] = useState("");
   const [newTitle, setNewTitle] = useState("");
-  let newStartDate = "";
-  let newLastDate = "";
-  let newGoalSum = 0;
-  let newDeadLine = "";
-  let arrReward = [];
+
+  const [newStartDate, setNewStartDate] = useState("");
+  const [newLastDate, setNewLastDate] = useState("");
+  const [newGoalSum, setNewGoalSum] = useState(0);
+  const [newDeadLine, setNewDeadLine] = useState("");
+  const [arrReward, setarrReward] = useState([]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
     let body = {
       post: {
-        user_id: userId,
+        user_info :{user_id: userId},
         poster: newPoster,
         title: newTitle,
         image: newPosterImg,
         contents: "contents",
+        total_donation: 0,
         goal_sum: newGoalSum,
         dead_line: newDeadLine,
         start_day: newStartDate,
@@ -33,11 +35,18 @@ function FundingPage() {
         reward_list: arrReward,
       },
     };
-
     console.log(body);
 
     dispatch(newFunding(body)).then((response) => {
       console.log(response);
+
+      if(response.payload.validate && response.payload.success) {
+        alert("펀딩게시에 성공하였습니다.");
+        props.history.push('/');
+      } else if(!response.payload.validate){
+        alert("동일한 타이틀의 펀딩은 게시될 수 없습니다.");
+        return false;
+      } 
     });
   };
 
@@ -67,16 +76,16 @@ function FundingPage() {
   };
 
   const onStartDayHandler = (e) => {
-    newStartDate = e.currentTarget.value;
+    setNewStartDate(e.currentTarget.value);
   };
   const onLastDayHandler = (e) => {
-    newLastDate = e.currentTarget.value;
+    setNewLastDate(e.currentTarget.value);
   };
   const onGoalSumHandler = (e) => {
-    newGoalSum = e.currentTarget.value;
+   setNewGoalSum(e.currentTarget.value);
   };
   const onDeadLineHandler = (e) => {
-    newDeadLine = e.currentTarget.value;
+    setNewDeadLine(e.currentTarget.value);
   };
   const onAddRewardHandler = (e) => {
     const rewardContainer = document.querySelector(".rewardContainer");
@@ -86,7 +95,7 @@ function FundingPage() {
       reward_money: addDoMoney,
       reward: addReward,
     };
-    arrReward.push(rewardObj);
+    setarrReward(arrReward.concat(rewardObj));
     console.log(arrReward);
 
     const rewardLi = document.createElement('p');
@@ -100,86 +109,97 @@ function FundingPage() {
   };
 
   return (
-    <div>
-      <p>공연 정보</p>
-      <form onSubmit={onSubmitHandler} className="newFundingContainer">
-        <div className="fundingInfoContainer">
-          <p>
-            <label className="formLabel">타이틀</label>
+    <div className="fundingFormContainer">
+      <p className="postFundingTitle">Show information</p>
+      <form onSubmit={onSubmitHandler} className="fundingForm">
+        
+          <p className="formInputLine">
+            <label className="fundingLabel">타이틀</label>
             <input
               type="text"
               name="title"
-              className="formInput"
+              className="fundingInput"
               onChange={onTitleHandler}
+              required
             />
           </p>
-          <p>
-            <label className="formLabel">포스터</label>
-            <input type="file" name="poster" onChange={onPosterHandler} />
+          <p className="formInputLine">
+            <label className="fundingLabel">포스터</label>
+            <input type="file" name="poster" onChange={onPosterHandler} required/>
           </p>
           ``
-          <p>
-            <label className="formLabel">첫 공연날짜</label>
+          <p className="formInputLine">
+            <label className="fundingLabel">첫 공연날짜</label>
             <input
               type="date"
-              className="formInput"
+              className="fundingInput"
               name="startDay"
               onChange={onStartDayHandler}
+              required
             />
           </p>
-          <p>
-            <label className="formLabel">마지막 공연날짜</label>
+          <p className="formInputLine">
+            <label className="fundingLabel">마지막 공연날짜</label>
             <input
               type="date"
-              className="formInput"
+              className="fundingInput"
               name="lastDay"
               onChange={onLastDayHandler}
+              required
             />
           </p>
-          <p>후원 정보</p>
-          <p>
-            <label className="formLabel">후원 마감일</label>
+          <p className="postFundingTitle">Donation information</p>
+          <p className="formInputLine">
+            <label className="fundingLabel">후원 마감일</label>
             <input
               type="date"
-              className="formInput"
+              className="fundingInput"
               name="deadLine"
               onChange={onDeadLineHandler}
+              required
             />
           </p>
-          <p>
-            <label className="formLabel">목표 후원금액</label>
+          <p className="formInputLine">
+            <label className="fundingLabel">목표 후원금액</label>
             <input
               type="number"
-              className="formInput"
+              className="fundingInput"
               name="goalSum"
               onChange={onGoalSumHandler}
+              required
             />
           </p>
           <div className="rewardContainer">
-            <p>
-              리워드 <b>* 최소 3개 이상의 리워드가 등록되어야 합니다. *</b>
+            <p className="postFundingTitle">
+              Rewards <b>* 최소 3개 이상의 리워드가 등록되어야 합니다. *</b>
             </p>
-            <label>후원금액</label>
-            <input type="number" placeholder="900000" id="donaMoneyInput" />
-            <label>리워드</label>
+            <p className="formInputLine">
+            <label className="fundingLabel donationLabel">후원금액</label>
+            <input className="fundingInput donationMoneyInput" type="number" placeholder="900000" id="donaMoneyInput" />
+            <label className="fundingLabel donationLabel">리워드</label>
             <input
               type="text"
               placeholder="티켓 1장, 팜플렛, 포스터"
               id="rewardInput"
+              className="fundingInput rewardInput"
+              required
             />
+      
             <input
               type="button"
               name="submit"
               value="+"
+              className="addRewardBtn"
               onClick={onAddRewardHandler}
-            />
+              required
+            /></p>
           </div>
-        </div>
         <div className="fundingContentsContainer inputContainer">
-          <label className="formLabel">펀딩 콘텐츠</label>
-          <input type="textarea" className="formInput" />
+          <p className="postFundingTitle">Contents</p>
+          <input type="file" className="fundingInput" />
+          {/* <input type="textarea" className="fundingInput" required/> */}
         </div>
-        <input type="submit" value="submit" name="submit" />
+        <input type="submit" value="submit" className="btnSubmit formBtns fundingBtn" name="submit" />
       </form>
     </div>
   );

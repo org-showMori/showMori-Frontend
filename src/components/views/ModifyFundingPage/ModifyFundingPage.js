@@ -1,61 +1,104 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch} from "react-redux";
-import {SESSION_ID} from "../../utils/SessionTypes";
 import {beforeModifyFunding, modifyFunding} from "../../../_actions/fundingAction";
 
 
 
-function ModifyFundingPage() {
+function ModifyFundingPage(props) {
     const dispatch = useDispatch();
-    const userId = window.sessionStorage.getItem(SESSION_ID);
-    
-    const [Title, setTitle] =useState("");
     const [Poster, setPoster] = useState("");
     const [PosterImg, setPosterImg] = useState("");
+    const [Title, setTitle] =useState("");
     const [StartDate, setStartDate] = useState("");
     const [LastDate, setLastDate] = useState("");
     const [GoalSum, setGoalSum] = useState(0);
     const [DeadLine, setDeadLine] = useState("");
     const [arrReward, setarrReward] = useState([]);
+    const [ContentsImg, setContentsImg] = useState("");
     const [Contents, setContents] = useState("");
 
+
     useEffect(() => {
-        console.log(userId);
+
         const postId= 1;
         dispatch(beforeModifyFunding(postId)).then((response) => {
             console.log(response);
             setTitle(response.payload.title);
-            setPoster(response.payload.poster);
             setStartDate(response.payload.start_day);
             setLastDate(response.payload.last_day);
             setGoalSum(response.payload.goal_sum);
             setDeadLine(response.payload.dead_line);
-            setarrReward(response.payload.reward_list);
-            setContents(response.payload.contents);
+            response.payload.reward_list.map((e) => {
+              printRewardList(e.reward_money, e.reward);
+            })
+            
         })
     }, []);
 
-    const onSubmitHandler = () => {
-        
+    const onSubmitHandler = (e) => {
+      e.preventDefault();
+
+      let body = {
+          poster: Poster,
+          title: Title,
+          poster_image: PosterImg,
+          contents: Contents,
+          total_donation: 0,
+          goal_sum: GoalSum,
+          dead_line: DeadLine,
+          start_day: StartDate,
+          last_day: LastDate,
+          reward_list: arrReward,
+          contents_image: ContentsImg,
+      };
+      console.log(body);
+  
+      dispatch(modifyFunding(body)).then((response) => {
+        console.log(response);
+  
+        if(response.payload.validate && response.payload.success) {
+          alert("펀딩게시에 성공하였습니다.");
+          props.history.push('/');
+        } else if(!response.payload.validate){
+          alert("동일한 타이틀의 펀딩은 게시될 수 없습니다.");
+          return false;
+        } 
+      });
     }
-    const onPosterHandler = (e) => {
+    const onImgHandler = (e) => {
         let fileList = e.target.files;
         let file = fileList[0]; //무조건 하나의 파일만 업로드 가능
         if (!/^image\//.test(file.type)) {
           alert("이미지 파일만 등록 가능합니다.");
           return false;
         }
-        setPoster(file.name);
-        //인코딩 img to base64
-        encodeImageToBase64(file);
+        switch(e.currentTarget.name) {
+          case "poster":
+            setPoster(file.name);
+            return  encodeImageToBase64(file,"poster"); //인코딩 img to base64
+          case "contents": 
+            setContents(file.name);
+            return encodeImageToBase64(file,"contents"); //인코딩 img to base64
+          default:
+            return;
+        }
+       
+       
       };
     
-      const encodeImageToBase64 = (file) => {
+      const encodeImageToBase64 = (file,name) => {
         let reader = new FileReader();
         //convert the file to base64 text
         reader.readAsDataURL(file);
         reader.onload = () => {
-          setPosterImg(reader.result);
+          switch(name) {
+            case "poster":
+              return setPosterImg(reader.result);
+            case "contents":
+              return setContentsImg(reader.result);
+            default:
+              return;
+          }
         };
       };
     const onStartDayHandler = (e) => {
@@ -71,26 +114,29 @@ function ModifyFundingPage() {
         setDeadLine(e.currentTarget.value);
       };
 
-      const onAddRewardHandler = (e) => {
-        const rewardContainer = document.querySelector(".rewardContainer");
-        const addDoMoney = rewardContainer.querySelector("#donaMoneyInput").value;
-        const addReward = rewardContainer.querySelector("#rewardInput").value;
+      const onAddRewardHandler = () => {
+        const addDoMoney = document.querySelector("#donaMoneyInput").value;
+        const addReward = document.querySelector("#rewardInput").value;
+        printRewardList(addDoMoney,addReward);
+      };
+
+      const printRewardList = (addDoMoney, addReward) => {
+        const rewardContainer = document.querySelector("#rewardListContainer");
         const rewardObj = {
           reward_money: addDoMoney,
           reward: addReward,
         };
         setarrReward(arrReward.concat(rewardObj));
-        console.log(arrReward);
-    
         const rewardLi = document.createElement('p');
         const delBtn = document.createElement('input');
         delBtn.type = "button";
         delBtn.value = 'X';
         // delBtn.onClick = {};
-        rewardLi.innerText = `${addDoMoney} | ${addReward}`;
+        rewardLi.innerText = `후원금액 : ${addDoMoney} 리워드 : ${addReward}`;
         rewardLi.appendChild(delBtn);
         rewardContainer.appendChild(rewardLi);
-      };
+      }
+
     return (
         <div className="fundingFormContainer">
         <p className="postFundingTitle">Show information</p>
@@ -109,7 +155,7 @@ function ModifyFundingPage() {
             </p>
             <p className="formInputLine">
               <label className="fundingLabel">포스터</label>
-              <input type="file" name="poster" onChange={onPosterHandler} value={Poster} required/>
+              <input type="file" name="poster" onChange={onImgHandler} required/>
             </p>
             
             <p className="formInputLine">
@@ -180,14 +226,11 @@ function ModifyFundingPage() {
                 className="addRewardBtn"
                 onClick={onAddRewardHandler}
                 required
-              />{arrReward}</p>
-             
+              /></p>
+              <div id="rewardListContainer"></div>
             </div>
-          <div className="fundingContentsContainer inputContainer">
             <p className="postFundingTitle">Contents</p>
-            <input type="file" className="fundingInput" />
-            {/* <input type="textarea" className="fundingInput" required/> */}
-          </div>
+            <input type="file" name="contents" className="fundingInput" onChange={onImgHandler}/>
           <input type="submit" value="submit" className="btnSubmit formBtns fundingBtn" name="submit" />
         </form>
       </div>

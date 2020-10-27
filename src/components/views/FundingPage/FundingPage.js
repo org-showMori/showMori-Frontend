@@ -6,10 +6,11 @@ import { SESSION_ID } from "../../utils/SessionTypes";
 function FundingPage(props) {
   const dispatch = useDispatch();
   const userId = window.sessionStorage.getItem(SESSION_ID);
-  // const userId = "apple";
   const [newPoster, setNewPoster] = useState("");
   const [newPosterImg, setNewPosterImg] = useState("");
   const [newTitle, setNewTitle] = useState("");
+  const [newContents, setNewContents] = useState("");
+  const [newContentsImg, setNewContentsImg] = useState("");
 
   const [newStartDate, setNewStartDate] = useState("");
   const [newLastDate, setNewLastDate] = useState("");
@@ -21,20 +22,19 @@ function FundingPage(props) {
     e.preventDefault();
 
     let body = {
-      post: {
-        user_info :{user_id: userId},
-        poster: newPoster,
-        title: newTitle,
-        image: newPosterImg,
-        contents: "contents",
-        total_donation: 0,
-        goal_sum: newGoalSum,
-        dead_line: newDeadLine,
-        start_day: newStartDate,
-        last_day: newLastDate,
-        reward_list: arrReward,
-      },
-    };
+      user_id: userId,
+      poster: newPoster,
+      title: newTitle,
+      poster_image: newPosterImg,
+      contents: newContents,
+      total_donation: 0,
+      goal_sum: newGoalSum,
+      dead_line: newDeadLine,
+      start_day: newStartDate,
+      last_day: newLastDate,
+      reward_list: arrReward,
+      contents_image: newContentsImg,
+  };
     console.log(body);
 
     dispatch(newFunding(body)).then((response) => {
@@ -54,24 +54,38 @@ function FundingPage(props) {
     setNewTitle(e.currentTarget.value);
   };
 
-  const onPosterHandler = (e) => {
+  const onImgHandler = (e) => {
     let fileList = e.target.files;
     let file = fileList[0]; //무조건 하나의 파일만 업로드 가능
     if (!/^image\//.test(file.type)) {
       alert("이미지 파일만 등록 가능합니다.");
       return false;
     }
-    setNewPoster(file.name);
-    //인코딩 img to base64
-    encodeImageToBase64(file);
+    switch(e.currentTarget.name) {
+      case "poster":
+        setNewPoster(file.name);
+        return  encodeImageToBase64(file,"poster"); //인코딩 img to base64
+      case "contents": 
+        setNewContents(file.name);
+        return encodeImageToBase64(file,"contents"); //인코딩 img to base64
+      default:
+        return;
+    }
   };
 
-  const encodeImageToBase64 = (file) => {
+  const encodeImageToBase64 = (file, name) => {
     let reader = new FileReader();
     //convert the file to base64 text
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setNewPosterImg(reader.result);
+      switch(name) {
+        case "poster":
+          return setNewPosterImg(reader.result);
+        case "contents":
+          return setNewContentsImg(reader.result);
+        default:
+          return;
+      }
     };
   };
 
@@ -125,7 +139,7 @@ function FundingPage(props) {
           </p>
           <p className="formInputLine">
             <label className="fundingLabel">포스터</label>
-            <input type="file" name="poster" onChange={onPosterHandler} required/>
+            <input type="file" name="poster" onChange={onImgHandler} required/>
           </p>
           ``
           <p className="formInputLine">
@@ -194,11 +208,8 @@ function FundingPage(props) {
               required
             /></p>
           </div>
-        <div className="fundingContentsContainer inputContainer">
           <p className="postFundingTitle">Contents</p>
-          <input type="file" className="fundingInput" />
-          {/* <input type="textarea" className="fundingInput" required/> */}
-        </div>
+          <input type="file" className="fundingInput" name="contents" onChange={onImgHandler} />
         <input type="submit" value="submit" className="btnSubmit formBtns fundingBtn" name="submit" />
       </form>
     </div>

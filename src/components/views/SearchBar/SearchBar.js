@@ -5,27 +5,26 @@ import { searchFunding} from "../../../_actions/fundingAction";
 
 function SearchBar(props) {
   const dispatch = useDispatch();
-  const [Keyword] = useState("");
+  const [Keyword, setKeyword] = useState("");
 
   const onSubmitHandler = (e) => {
-
-    let body = {
-      keyword : Keyword
-    }
-
-    dispatch(searchFunding(body)).then(response => {
+    e.preventDefault();
+    dispatch(searchFunding(Keyword)).then(response => {
       console.log(response);
+     
     });
 
-    props.history.push('/PrintPostPage');
 
-  };
 
+};
+  const onKeywordHandler = (e) => {
+    setKeyword(e.currentTarget.value);
+  }
   return (
     <div className="searchBarDiv">
       <form onSubmit={onSubmitHandler}>
       {/* <form onSubmit={onSubmitHandler} action={getFunding}> */}
-      <input className="searchInput" type="text" name="search" placeholder="Search.."/>
+      <input className="searchInput" onChange={onKeywordHandler} type="text" name="search" placeholder="Search.."/>
       </form>
     </div>
   );

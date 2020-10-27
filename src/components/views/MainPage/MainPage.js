@@ -11,6 +11,7 @@ import FundingPage from "../FundingPage/FundingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import MyPage from "../MyPage/MyPage";
+import ModifyFudingPage from "../ModifyFundingPage/ModifyFundingPage";
 
 
 
@@ -26,6 +27,7 @@ function MainPage() {
           <Route path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />
           <Route path="/users" component={MyPage} />
+          <Route path="/modify-funding" component={ModifyFudingPage} />
         </Switch>
       </div>
     </Router>

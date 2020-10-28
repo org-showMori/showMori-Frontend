@@ -331,8 +331,11 @@ a:hover {
     display: flex;
     flex-direction: column;
 }
-.rewardContainer {
-
+#rewardListContainer {
+    width: 100%;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
 }
 .donationLabel {
     width: 10%;

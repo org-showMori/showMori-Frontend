@@ -57,7 +57,7 @@ function LoginPage(props) {
     const tempId = Id;
     window.sessionStorage.setItem(SESSION_ID, tempId);
     alert(`${tempId}님 반갑습니다.`);
-    window.location.replace('/PrintPostPage');
+    window.location.replace('/posts');
    
   };
 

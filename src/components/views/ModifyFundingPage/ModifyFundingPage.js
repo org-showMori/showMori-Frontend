@@ -16,11 +16,11 @@ function ModifyFundingPage(props) {
     const [arrReward, setarrReward] = useState([]);
     const [ContentsImg, setContentsImg] = useState("");
     const [Contents, setContents] = useState("");
-
+    const postId= 1;
+    let numReward = 0;
 
     useEffect(() => {
 
-        const postId= 1;
         dispatch(beforeModifyFunding(postId)).then((response) => {
             console.log(response);
             setTitle(response.payload.title);
@@ -31,12 +31,22 @@ function ModifyFundingPage(props) {
             response.payload.reward_list.map((e) => {
               printRewardList(e.reward_money, e.reward);
             })
-            
+          
         })
+        
     }, []);
+    const chkFormValidate = () => {
+      const form = document.querySelector(".fundingForm");
+      const startDay = new Date(form.startDay.value);
+      const lastDay = new Date(form.lastDay);
+      const deadLineDay = new Date(form.deadLine);
 
+      console.log(startDay);
+      
+    }
     const onSubmitHandler = (e) => {
       e.preventDefault();
+      chkFormValidate();
 
       let body = {
           poster: Poster,
@@ -53,7 +63,7 @@ function ModifyFundingPage(props) {
       };
       console.log(body);
   
-      dispatch(modifyFunding(body)).then((response) => {
+      dispatch(modifyFunding(body, postId)).then((response) => {
         console.log(response);
   
         if(response.payload.validate && response.payload.success) {
@@ -82,8 +92,6 @@ function ModifyFundingPage(props) {
           default:
             return;
         }
-       
-       
       };
     
       const encodeImageToBase64 = (file,name) => {
@@ -135,12 +143,13 @@ function ModifyFundingPage(props) {
         rewardLi.innerText = `후원금액 : ${addDoMoney} 리워드 : ${addReward}`;
         rewardLi.appendChild(delBtn);
         rewardContainer.appendChild(rewardLi);
+        numReward++;
       }
 
     return (
         <div className="fundingFormContainer">
         <p className="postFundingTitle">Show information</p>
-        <form onSubmit={onSubmitHandler} className="fundingForm">
+        <form onSubmit={onSubmitHandler} name="fundingForm" className="fundingForm">
 
             <p className="formInputLine">
               <label className="fundingLabel">타이틀</label>
@@ -216,7 +225,6 @@ function ModifyFundingPage(props) {
                 placeholder="티켓 1장, 팜플렛, 포스터"
                 id="rewardInput"
                 className="fundingInput rewardInput"
-                required
               />
 
               <input

@@ -22,8 +22,8 @@ function FundingPage(props) {
     e.preventDefault();
 
     let body = {
-      user_id: userId,
-      poster: newPoster,
+      user_info: {user_id: userId},
+      poster: newPoster,                                             
       title: newTitle,
       poster_image: newPosterImg,
       contents: newContents,
@@ -42,7 +42,7 @@ function FundingPage(props) {
 
       if(response.payload.validate && response.payload.success) {
         alert("펀딩게시에 성공하였습니다.");
-        props.history.push('/');
+        // props.history.push('/');
       } else if(!response.payload.validate){
         alert("동일한 타이틀의 펀딩은 게시될 수 없습니다.");
         return false;
@@ -102,9 +102,9 @@ function FundingPage(props) {
     setNewDeadLine(e.currentTarget.value);
   };
   const onAddRewardHandler = (e) => {
-    const rewardContainer = document.querySelector(".rewardContainer");
-    const addDoMoney = rewardContainer.querySelector("#donaMoneyInput").value;
-    const addReward = rewardContainer.querySelector("#rewardInput").value;
+    const rewardContainer = document.querySelector("#rewardListContainer");
+    const addDoMoney = document.querySelector("#donaMoneyInput").value;
+    const addReward = document.querySelector("#rewardInput").value;
     const rewardObj = {
       reward_money: addDoMoney,
       reward: addReward,
@@ -196,9 +196,7 @@ function FundingPage(props) {
               placeholder="티켓 1장, 팜플렛, 포스터"
               id="rewardInput"
               className="fundingInput rewardInput"
-              required
             />
-      
             <input
               type="button"
               name="submit"
@@ -207,6 +205,7 @@ function FundingPage(props) {
               onClick={onAddRewardHandler}
               required
             /></p>
+            <div id="rewardListContainer"></div>
           </div>
           <p className="postFundingTitle">Contents</p>
           <input type="file" className="fundingInput" name="contents" onChange={onImgHandler} />

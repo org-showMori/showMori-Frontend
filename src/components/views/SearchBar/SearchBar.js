@@ -9,6 +9,7 @@ function SearchBar(props) {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    console.log(props.location.search);
     dispatch(searchFunding(Keyword)).then(response => {
       console.log(response);
      

@@ -32,9 +32,11 @@ export function delFunding(dataToSubmit, postId) {
 }
 
 export function newFunding(dataToSubmit) {
+  const instance = axios.create({ timeout: 10000000});
   const request = axios
-    .put(NEW_FUNDING_URL, dataToSubmit)
-    .then((response) => response.data);
+    .post(NEW_FUNDING_URL, dataToSubmit)
+    .then((response) => response.data)
+    
 
   return {
     type: NEW_FUNDING,
@@ -100,7 +102,7 @@ export function beforeModifyFunding(postId) {
 export function modifyFunding(dataToSubmit, postId) {
   const request = axios 
     .put(`${MODIFY_FUNDING_URL}${postId}`, dataToSubmit)
-    .then((response) => response.data);
+    .then((response) => response.data);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 
   return {
     type: MODIFY_FUNDING,

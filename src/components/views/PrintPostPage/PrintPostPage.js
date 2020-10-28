@@ -14,50 +14,54 @@ function PrintPostPage(props) {
    useEffect(() => {
      console.log(props.location.search);
     let clientFundingList = window.localStorage.getItem(LS_FUNDINGS);
-    
+
     //no funding-info in client-side
      if(clientFundingList === null || clientFundingList === undefined || clientFundingList === '') {
+      console.log("없음");
       lsClear();
      } 
      //funding-info is in client-side
      else {
+      console.log("있음");
        dispatch(getAllPostId()).then((response) => {
          console.log(response);
-
-         const parsedClientList = JSON.parse(clientFundingList);
-         parsedClientList.map((e) => {
-           if(!response.payload.includes(e.post_id)) {
-             lsClear();
-           } else {
-            PrintPostCard(parsedClientList);
-           }
+          const tempArr = response.payload;
+          console.log(tempArr);
+          JSON.parse(clientFundingList).map((e) => {
+           if(!tempArr.includes(e.post_id)) {
+             console.log("포함하지 않음");
+            lsClear();
+           } 
          })
-        
        })
-       //check if funding is ended (due to passed dead-line)
+      const parsedClientFundingList = JSON.parse(clientFundingList);
+      PrintPostCard(parsedClientFundingList);
      } 
    }, []);
 
    const lsClear = () => {
+     console.log("ls실행");
     dispatch(getAllFundingInfo()).then((response) => {
       console.log(response);
       window.localStorage.setItem(LS_FUNDINGS, JSON.stringify(response.payload));
-      const newclientFundingList = window.localStorage.getItem(LS_FUNDINGS);
-      PrintPostCard(JSON.parse(newclientFundingList));
+    //  const newclientFundingList = window.localStorage.getItem(LS_FUNDINGS);
+      PrintPostCard(response.payload);
     })
    }
    const PrintPostCard = (fundings) => {
+    
     setPostList(
       fundings.map((e, i) => {
         return (
           <PostCard
             title={e.title}
-            posterImg={`${IMG_SRC}${e.image}`}
+            posterImg={`${IMG_SRC}${e.poster_image}`}
             goalsum={e.goal_sum}
             totalDonation={e.total_donation}
             deadLine={e.dead_line}
             postId={e.post_id}
             key={i}
+            
           />
         );
       })

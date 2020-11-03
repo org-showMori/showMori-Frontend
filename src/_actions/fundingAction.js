@@ -32,7 +32,6 @@ export function delFunding(dataToSubmit, postId) {
 }
 
 export function newFunding(dataToSubmit) {
-  const instance = axios.create({ timeout: 10000000});
   const request = axios
     .post(NEW_FUNDING_URL, dataToSubmit)
     .then((response) => response.data)

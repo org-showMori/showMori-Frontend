@@ -3,16 +3,18 @@ import { useDispatch } from "react-redux";
 import Banner from "../Banner/Banner";
 import { getAllFundingInfo, getAllPostId } from "../../../_actions/fundingAction";
 import PostCard from "./PostCard";
+import {LS_FUNDINGS} from "../../utils/SessionTypes";
+import queryString from 'query-string';
 
 const IMG_SRC = "data:image/jpeg;base64,";
-const LS_FUNDINGS = "currentFundings";
 
 function PrintPostPage(props) {
    const dispatch = useDispatch();
    const [postList, setPostList] = useState([]);
+   const [FilteredList, setFilteredList] = useState([]);
 
    useEffect(() => {
-     console.log(props.location.search);
+
     let clientFundingList = window.localStorage.getItem(LS_FUNDINGS);
 
     //no funding-info in client-side
@@ -23,6 +25,18 @@ function PrintPostPage(props) {
      //funding-info is in client-side
      else {
       console.log("있음");
+      
+      //검색결과 있는 경우
+      const Keyword = queryString.parse(props.location.search).search; //props.loaction.search를 이용해 검색단어를 찾음
+      if(Keyword !== undefined) {
+        console.log(Keyword);
+        const currentList = JSON.parse(window.localStorage.getItem(LS_FUNDINGS)); //ls에 저장된 리스트 불러옴
+        const filteredList = currentList.filter((e) => { //filter를 이용해 검색단어를 포함한 펀딩만 필터링
+          return e.title.includes(Keyword);
+        });
+        return PrintPostCard(filteredList); //필터된 리스트를 출력해줌
+      }
+     
        dispatch(getAllPostId()).then((response) => {
          console.log(response);
           const tempArr = response.payload;
@@ -30,8 +44,9 @@ function PrintPostPage(props) {
           JSON.parse(clientFundingList).map((e) => {
            if(!tempArr.includes(e.post_id)) {
              console.log("포함하지 않음");
-            lsClear();
-           } 
+            return lsClear();
+           }
+           return; 
          })
        })
       const parsedClientFundingList = JSON.parse(clientFundingList);
@@ -45,11 +60,12 @@ function PrintPostPage(props) {
       console.log(response);
       window.localStorage.setItem(LS_FUNDINGS, JSON.stringify(response.payload));
     //  const newclientFundingList = window.localStorage.getItem(LS_FUNDINGS);
+    console.log("lsclear로 새로 get");
       PrintPostCard(response.payload);
     })
    }
    const PrintPostCard = (fundings) => {
-    
+    if(fundings.length !== 0){
     setPostList(
       fundings.map((e, i) => {
         return (
@@ -64,8 +80,11 @@ function PrintPostPage(props) {
             
           />
         );
-      })
-    );
+      }) //검색결과가 있는 경우
+    ) }else {
+       return setPostList("검색결과가 없습니다.");
+    } //검색결과 없는 경우
+   
   }
     return (
     <div className="printPostsPageContainer">

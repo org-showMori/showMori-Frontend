@@ -1,7 +1,7 @@
 import {SESSION_ID} from "../components/utils/SessionTypes";
 
 const currentId = window.sessionStorage.getItem(SESSION_ID);
-export const BE_URL = "http://a677e1436aa8.ngrok.io";
+export const BE_URL = "http://3fde85e24d81.ngrok.io";
 
 
 

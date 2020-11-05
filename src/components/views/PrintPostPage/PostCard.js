@@ -27,23 +27,15 @@ function PostCard(props) {
     const currentGoalSum = props.goalsum ;
     const currentTotalDonation = props.totalDonation ;
     const currentDeadLine = props.deadLine;
-    // const currentPostId = props.postId ;
-    // const [PostId, setPostId] = useState(currentPostId);
-    //  const img = document.getElementById("imgid");
-
-    // const onClickHandler = (e) => {
-    //     let body = {};
-    //     console.log("div클릭");
-    //     // dispatch(infoFunding(body, PostId)).then((response) => {
-    //     //     console.log(response);
-    //     //     props.history.push(`/posts/${PostId}`);
-    //     // })
-    // }
+   
+    const goFundingInfo = (e) => {
+        console.log(e);
+    }
 
 
 
     return (
-        <div className="postCard" >
+        <div className="postCard" onClick={goFundingInfo}>
           <img src={currentPoster} alt="poster" className="cardImg"/>
             <p className="cardTitle cardTitle">{currentTitle}</p>
             <p className="cardLeftMoney cardContents">{currentGoalSum-currentTotalDonation}원 남음 <b className="cardBold">

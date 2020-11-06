@@ -65,9 +65,9 @@ export function getAllFundingInfo(dataToSubmit) {
   };
 }
 
-export function infoFunding(dataToSubmit, postId) {
+export function infoFunding(postId) {
   const request = axios
-    .get(`${INFOFUNDING_URL}${postId}`, dataToSubmit)
+    .get(`${INFOFUNDING_URL}${postId}`)
     .then((response) => response.data);
 
   return {

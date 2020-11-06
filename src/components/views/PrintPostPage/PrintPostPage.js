@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Banner from "../Banner/Banner";
 import {

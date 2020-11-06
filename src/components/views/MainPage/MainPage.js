@@ -13,6 +13,7 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import MyPage from "../MyPage/MyPage";
 import ModifyFudingPage from "../ModifyFundingPage/ModifyFundingPage";
 import FundingDetailPage from "../FundingDetailPage/FundingDetailPage";
+import DonationPage from "../DonationPage/DonationPage";
 
 
 
@@ -31,6 +32,7 @@ function MainPage() {
           <Route exact path="/users" component={MyPage} />
           <Route exact path="/modify-funding" component={ModifyFudingPage} />
           <Route exact path="/posts/:post_id" component={FundingDetailPage} />
+          <Route exact path="/posts/:post_id/donate" component={DonationPage} />
         </Switch>
       </div>
     </Router>

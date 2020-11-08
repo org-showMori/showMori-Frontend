@@ -19,6 +19,27 @@ function FundingDetailPage(props) {
 
   const [selectedDate, setSelectedDate] = useState("");
 
+  const printReward = (rewards) => {
+    const rewardContainer = document.querySelector("#rewardList");
+
+    setarrReward(rewards.map((e) => {
+      console.log(e);
+      const li = document.createElement("li");
+      const input = document.createElement("input");
+      const label = document.createElement("label");
+
+      input.setAttribute('type', 'radio');
+      input.setAttribute('name', 'select_donation');
+      input.setAttribute('value', `${e.reward_money}`);
+      input.setAttribute('required', '');
+      label.innerText = `후원금액: ${e.reward_money} 리워드 : ${e.reward}`;
+
+      li.appendChild(input);
+      li.appendChild(label);
+      
+      return rewardContainer.appendChild(li);
+    }))
+  }
   useEffect(() => {
     
     // dispatch(infoFunding(postId)).then((response) => {
@@ -34,7 +55,8 @@ function FundingDetailPage(props) {
         setStartDate(data.start_day);
         setContentsImg(`${IMG_SRC}${data.contents_image}`);
         setTitle(data.title);
-        setarrReward(data.reward_list);
+        const rewards = data.reward_list;
+        printReward(rewards);
   //   })
 
     
@@ -44,21 +66,28 @@ function FundingDetailPage(props) {
    setSelectedDate(e.currentTarget.value);
  }
 
+ const onSubmitHandler = (e) => {
+   e.preventDefault();
+   console.log(e);
+   
+  //  return <DonationPage selected_date={selectedDate} selected_amount={5000} />
+ }
+
   return (
     <div>
       <img src={PosterImg} alt="poster_image" />
       <p >{DeadLine}</p>
       <p>{GoalSum}</p>
       <p>{Title}</p>
-     
-      <p>{JSON.stringify(arrReward)}</p>
       {/* <img src={ContentsImg} alt="contents_image" /> */}
-      <form>
+      <form onSubmit={onSubmitHandler}> 
         <label >공연 관람 날짜</label>
-        <input type="date" name="selectedDate" min={StartDate} max={LastDate} onChange={onDateHandler}/>
+        <ul id="rewardList">
+          
+        </ul>
+        <input type="date" required name="selectedDate" min={StartDate} max={LastDate} onChange={onDateHandler}/>
       <Link to={`/posts/${postId}/donate/`}>
-        <input type="button" value="후원하기" />
-        <DonationPage selected_date={selectedDate} selected_amount={5000} />
+        <input type="submit" value="후원하기" />
       </Link>
       </form>
     </div>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link} from "react-router-dom";
 import { infoFunding } from "../../../_actions/fundingAction";
-import DonationPage from "../DonationPage/DonationPage";
 
 function FundingDetailPage(props) {
   const IMG_SRC = "data:image/jpeg;base64,";
@@ -14,30 +13,22 @@ function FundingDetailPage(props) {
   const [LastDate, setLastDate] = useState("");
   const [GoalSum, setGoalSum] = useState(0);
   const [DeadLine, setDeadLine] = useState("");
-  const [arrReward, setarrReward] = useState([]);
   const [ContentsImg, setContentsImg] = useState("");
-
-  const [selectedDate, setSelectedDate] = useState("");
+  const [arrReward, setarrReward] = useState([]);
+ 
+  const [SelectedDate, setSelectedDate] = useState("");
+  const [SelectedMoney, setSelectedMoney] = useState(0);
 
   const printReward = (rewards) => {
     const rewardContainer = document.querySelector("#rewardList");
 
     setarrReward(rewards.map((e) => {
-      console.log(e);
-      const li = document.createElement("li");
-      const input = document.createElement("input");
-      const label = document.createElement("label");
+      const option = document.createElement("option");
 
-      input.setAttribute('type', 'radio');
-      input.setAttribute('name', 'select_donation');
-      input.setAttribute('value', `${e.reward_money}`);
-      input.setAttribute('required', '');
-      label.innerText = `후원금액: ${e.reward_money} 리워드 : ${e.reward}`;
-
-      li.appendChild(input);
-      li.appendChild(label);
+      option.setAttribute('value', `${e.reward_money}`);
+      option.innerText = `후원금액: ${e.reward_money} 리워드 : ${e.reward}`;
       
-      return rewardContainer.appendChild(li);
+      return rewardContainer.appendChild(option);
     }))
   }
   useEffect(() => {
@@ -62,17 +53,15 @@ function FundingDetailPage(props) {
     
   }, []);
 
- const onDateHandler = (e) => {
-   setSelectedDate(e.currentTarget.value);
- }
-
- const onSubmitHandler = (e) => {
-   e.preventDefault();
-   console.log(e);
-   
-  //  return <DonationPage selected_date={selectedDate} selected_amount={5000} />
- }
-
+  const onSelectHandler = (e) => {
+    setSelectedMoney(e.target.value);
+    console.log(e.currentTarget.value);
+  }
+  
+  const onDateHandler = (e) => {
+    setSelectedDate(e.currentTarget.value);
+  }
+ 
   return (
     <div>
       <img src={PosterImg} alt="poster_image" />
@@ -80,16 +69,17 @@ function FundingDetailPage(props) {
       <p>{GoalSum}</p>
       <p>{Title}</p>
       {/* <img src={ContentsImg} alt="contents_image" /> */}
-      <form onSubmit={onSubmitHandler}> 
-        <label >공연 관람 날짜</label>
-        <ul id="rewardList">
-          
-        </ul>
+      <div> 
+        <label >공연 관람 날짜
+        <select id="rewardList" onChange={onSelectHandler}>
+          <option value="">공연관람날짜를 선택하세요.</option>
+        </select>
+        </label>
         <input type="date" required name="selectedDate" min={StartDate} max={LastDate} onChange={onDateHandler}/>
-      <Link to={`/posts/${postId}/donate/`}>
+        <Link to={`/posts/donate/${postId}/${SelectedDate}/${SelectedMoney}`} >
         <input type="submit" value="후원하기" />
-      </Link>
-      </form>
+        </Link>
+      </div>
     </div>
   );
 }

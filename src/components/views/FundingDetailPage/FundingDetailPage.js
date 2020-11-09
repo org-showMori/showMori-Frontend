@@ -70,14 +70,15 @@ function FundingDetailPage(props) {
       <p>{Title}</p>
       {/* <img src={ContentsImg} alt="contents_image" /> */}
       <div> 
-        <label >공연 관람 날짜
+        <label >후원금액 및 리워드
         <select id="rewardList" onChange={onSelectHandler}>
-          <option value="">공연관람날짜를 선택하세요.</option>
+          <option value="">후원금액을 선택하세요.</option>
         </select>
         </label>
+        <label>공연 관람 날짜</label>
         <input type="date" required name="selectedDate" min={StartDate} max={LastDate} onChange={onDateHandler}/>
         <Link to={`/posts/donate/${postId}/${SelectedDate}/${SelectedMoney}`} >
-        <input type="submit" value="후원하기" />
+        <input type="button" value="후원하기" />
         </Link>
       </div>
     </div>

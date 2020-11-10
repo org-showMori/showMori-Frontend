@@ -5,10 +5,14 @@
 }
 /* header part */
 header {
+    position: fixed;
     display: flex;
+    top: 0;
+    width: 100%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    background-color: white;
     margin-bottom: 20vmin;
 }
 #main {

@@ -65,9 +65,10 @@ function FundingDetailPage(props) {
   return (
     <div>
       <img src={PosterImg} alt="poster_image" />
+      <p>{Title}</p>
       <p >{DeadLine}</p>
       <p>{GoalSum}</p>
-      <p>{Title}</p>
+      
       {/* <img src={ContentsImg} alt="contents_image" /> */}
       <div> 
         <label >후원금액 및 리워드

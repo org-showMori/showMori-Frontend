@@ -1,3 +1,11 @@
-# Movie app 2020
+# 공연용 크라우드펀딩 웹사이트 - 리팩토링 using React
 
-React JS Fundamentals 2020 Study
+기존 (이곳) php, js 위주로 구현되었던 웹사이트를 React를 사용해 리팩토링함.
+
+1. 기존 사이트와 기능 동일
+- 공연게시
+- 로그인/로그아웃
+- 후원기능
+- 공연 / 후원 CRUD
+
+2. Spring, mySQL 을 사용한 백엔드 구현

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { newFunding } from "../../../_actions/fundingAction";
 import { SESSION_ID } from "../../utils/SessionTypes";
 
-function FundingPage(props) {
+function PostFundingPage(props) {
   const dispatch = useDispatch();
   const userId = window.sessionStorage.getItem(SESSION_ID);
   const [newPoster, setNewPoster] = useState("");
@@ -71,7 +71,8 @@ function FundingPage(props) {
       reward_list: arrReward,
       contents_image: newContentsImg,
     };
-    console.log(body);
+    console.log("submit");
+    console.log(arrReward);
 
     chkFormValidate(); //폼 유효성 검사
 
@@ -143,15 +144,33 @@ function FundingPage(props) {
     const rewardContainer = document.querySelector("#rewardListContainer");
     const addDoMoney = document.querySelector("#donaMoneyInput").value;
     const addReward = document.querySelector("#rewardInput").value;
+
+    //입력 제대로 되지 않은 경우 처리
+    if(addDoMoney === '' || addReward === '') {
+      alert("후원금액과 리워드를 입력해주세요.");
+      return false;
+    } 
+
     const rewardObj = {
       reward_money: addDoMoney,
       reward: addReward,
     };
     setarrReward(arrReward.concat(rewardObj));
+
+    const removeRewardState = (value) => {
+      setarrReward(arrReward.filter(e => {
+        console.log(e);
+        return e.reward_moeny !== value}));
+    }
+
     const delRewardList = (e) => {
-      //추가된 리워드 삭제
-      e.path[1].parentNode.removeChild(e.path[1]);
-     
+      //화면상에서 x버튼 클릭된 this
+      e.path[1].parentElement.removeChild(e.path[1]); 
+
+      //arrReward에 반영
+      const removedElement = e.path[1].rewardMoney;
+      removeRewardState(removedElement);
+      
     };
 
     const rewardLi = document.createElement("p");
@@ -164,7 +183,11 @@ function FundingPage(props) {
     rewardLi.innerText = `${addDoMoney} | ${addReward}`;
     rewardLi.appendChild(delBtn);
     rewardContainer.appendChild(rewardLi);
+    
+
+
     setNumReward(numReward+1);
+    
   };
 
   return (
@@ -269,4 +292,4 @@ function FundingPage(props) {
   );
 }
 
-export default FundingPage;
+export default PostFundingPage;

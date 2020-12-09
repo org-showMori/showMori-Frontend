@@ -1,7 +1,7 @@
 import {SESSION_ID} from "../components/utils/SessionTypes";
 
 const currentId = window.sessionStorage.getItem(SESSION_ID);
-export const BE_URL = "http://2981680d5549.ngrok.io";
+export const BE_URL = "http://2148351fc4a2.ngrok.io";
 
 
 
@@ -35,7 +35,7 @@ export const MODIFY_FUNDING = "modify_funding";
 
 
 
-export const HEADER = {
-  "content-type": "application/json",
-  "Access-Control-Allow-Origin": "*",
-}; 
+// export const HEADER = {
+//   "content-type": "application/json",
+//   "Access-Control-Allow-Origin": "*",
+// }; 

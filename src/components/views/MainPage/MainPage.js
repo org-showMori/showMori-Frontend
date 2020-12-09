@@ -6,13 +6,13 @@ import "../../../App.css";
 import "../../utils/MediaQuery.css";
 
 import HeaderPage from "../Header/Header";
-import PrintPostPage from '../PrintPostPage/PrintPostPage';
-import FundingPage from "../FundingPage/FundingPage";
+import LandingPage from '../LandingPage/LandingPage';
+import PostFundingPage from "../PostFundingPage/PostFundingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import MyPage from "../MyPage/MyPage";
 import ModifyFudingPage from "../ModifyFundingPage/ModifyFundingPage";
-import FundingDetailPage from "../FundingDetailPage/FundingDetailPage";
+import DetailFundingPage from "../DetailFundingPage/DetailFundingPage";
 import DonationPage from "../DonationPage/DonationPage";
 
 
@@ -24,15 +24,17 @@ function MainPage() {
       <HeaderPage />
       <div id="bodyPage">
         <Switch>
-          <Route exact path="/" component={PrintPostPage} />
-          <Route exact path="/posts" component={PrintPostPage} />
-          <Route exact path="/fundings" component={FundingPage} />
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/posts" component={LandingPage} />
+          <Route exact path="/fundings" component={PostFundingPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact  path="/register" component={RegisterPage} />
           <Route exact path="/users" component={MyPage} />
           <Route exact path="/modify-funding" component={ModifyFudingPage} />
-          <Route exact path="/posts/:post_id" component={FundingDetailPage} />
-          <Route exact path="/posts/:post_id/donate" component={DonationPage} />
+          <Route 
+            exact path="/posts/:post_id/:title/:goalsum/:totalDonation/:deadLine" 
+            component={DetailFundingPage} />
+          <Route exact path="/posts/donate/:post_id/:selected_date/:selected_money" component={DonationPage} />
         </Switch>
       </div>
     </Router>

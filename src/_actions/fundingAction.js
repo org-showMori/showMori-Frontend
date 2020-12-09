@@ -17,8 +17,7 @@ import {
   DELETE_FUNDING,
   ALL_POSTID,
   GET_FUNDING_FOR_MODIFY,
-  MODIFY_FUNDING,
-  HEADER,
+  MODIFY_FUNDING
 } from "./type.js";
 
 export function delFunding(dataToSubmit, postId) {
@@ -56,7 +55,7 @@ export function getAllPostId(dataToSubmit) {
 
 export function getAllFundingInfo(dataToSubmit) {
   const request = axios
-    .get(ALL_FUNDINGS_URL, dataToSubmit, HEADER)
+    .get(ALL_FUNDINGS_URL, dataToSubmit)
     .then((response) => response.data);
 
   return {

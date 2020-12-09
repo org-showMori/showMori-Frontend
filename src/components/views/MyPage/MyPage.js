@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ModifyUserInfoPage from "../ModifyUserInfoPage/ModifyUserInfoPage";
-import FundingListPage from "../FundingListPage/FundingListPage";
+import ListFundingPage from "../ListFundingPage/ListFundingPage";
 import DonationListPage from "../DonationListPage/DonationListPage";
 import UnRegisterPage from "../RegisterPage/UnRegister";
 
@@ -71,7 +71,7 @@ function MyPage() {
         </div>
         <div className="myPageContents">
           <Route path="/users/:id/user_info" component={ModifyUserInfoPage} />
-          <Route path="/users/:id/fundings" component={FundingListPage} />
+          <Route path="/users/:id/fundings" component={ListFundingPage} />
           <Route path="/users/:id/donations" component={DonationListPage} />
           <Route path="/users/:id/unregister" component={UnRegisterPage} />
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FundingListPage () {
+function ListFundingListPage () {
     return (
         <div>
             펀딩내역조회페이지
@@ -8,4 +8,4 @@ function FundingListPage () {
     );
 }
 
-export default FundingListPage;
+export default ListFundingListPage;

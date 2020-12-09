@@ -13,7 +13,7 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    margin-bottom: 20vmin;
+
 }
 #main {
     width: 60vmin;
@@ -105,7 +105,7 @@ ul {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding-top: 10vmin;
+    margin-top: 40vmin;
 }
 
 /*Log in*/

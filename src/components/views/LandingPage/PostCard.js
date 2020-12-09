@@ -15,12 +15,17 @@ const calculateDday = (dday) => {
     const cDday = new Date(dday[0], dday[1], dday[2]);
     const cToday = new Date(year, month, date);
     const cDay = 24 * 60 * 60 * 1000;
-    
-    return ((cDday-cToday)/cDay);   
+     
+    if(((cDday-cToday)/cDay))
+
+    return ;   
 };
 
 
 function PostCard(props) {
+
+    console.log(props);
+
     // const dispatch = useDispatch();
     const currentTitle = props.title ;
     const currentPoster = props.posterImg ;
@@ -40,7 +45,7 @@ function PostCard(props) {
             <p className="cardTitle cardTitle">{currentTitle}</p>
             <p className="cardLeftMoney cardContents">{currentGoalSum-currentTotalDonation}원 남음 <b className="cardBold">
             {donationRate(currentGoalSum, currentTotalDonation)}%</b></p>
-            <p className="cardDday cardContents">마감까지 <b className="cardBold">D-{calculateDday(currentDeadLine)}일</b></p>
+            <p className="cardDday cardContents">마감까지 <b className="cardBold">D - {calculateDday(currentDeadLine)}일</b></p>
         </div>
     );
 }

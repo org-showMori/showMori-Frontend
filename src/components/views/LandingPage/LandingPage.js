@@ -12,7 +12,7 @@ import queryString from "query-string";
 
 const IMG_SRC = "data:image/jpeg;base64,";
 
-function PrintPostPage(props) {
+function LandingPage(props) {
   const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
 
@@ -32,39 +32,49 @@ function PrintPostPage(props) {
     else {
       console.log("있음");
 
-      //검색결과 있는 경우
+      //검색여부 판별
       const Keyword = queryString.parse(props.location.search).search; //props.loaction.search를 이용해 검색단어를 찾음
-      if (Keyword !== undefined) {
+     
+      if (Keyword !== undefined) {//검색결과 있는 경우
         console.log(Keyword);
-        const currentList = JSON.parse(
-          window.localStorage.getItem(LS_FUNDINGS)
-        ); //ls에 저장된 리스트 불러옴
+        const currentList = JSON.parse(window.localStorage.getItem(LS_FUNDINGS)); //ls에 저장된 리스트 불러옴
         const filteredList = currentList.filter((e) => {
           //filter를 이용해 검색단어를 포함한 펀딩만 필터링
           return e.title.includes(Keyword);
         });
         return PrintPostCard(filteredList); //필터된 리스트를 출력해줌
+        
       }
 
+      const parsedClientFundingList = JSON.parse(clientFundingList);
+      
       dispatch(getAllPostId()).then((response) => {
         console.log(response);
         const tempArr = response.payload;
         console.log(tempArr);
-        JSON.parse(clientFundingList).map((e) => {
+        console.log(parsedClientFundingList);
+        parsedClientFundingList.map((e) => {
+          //브라우저 ls의 공연정보와 서버의 공연정보가 다른 경우 (개수고려x)
           if (!tempArr.includes(e.post_id)) {
             console.log("포함하지 않음");
+            return lsClear();
+          }
+          //서버와 브라우저의 공연정보 비교(개수고려O)
+          else if(tempArr.length !== parsedClientFundingList.length) {
+            console.log("개수가 다름");
             return lsClear();
           }
           return;
         });
       });
-      const parsedClientFundingList = JSON.parse(clientFundingList);
+     
       PrintPostCard(parsedClientFundingList);
     }
   }, []);
 
   const lsClear = () => {
     console.log("ls실행");
+    props.location.replace = '/posts';
     dispatch(getAllFundingInfo()).then((response) => {
       console.log(response);
       window.localStorage.setItem(
@@ -76,12 +86,19 @@ function PrintPostPage(props) {
       PrintPostCard(response.payload);
     });
   };
+
+  const onClickMovePage = (e) =>{
+    const clickedPostId = e.currentTarget.post_id;
+    console.log(clickedPostId);
+    props.history.push(`/posts/${clickedPostId}`); 
+
+  }
   const PrintPostCard = (fundings) => {
     if (fundings.length !== 0) {
       setPostList(
         fundings.map((e, i) => {
           return (
-            <Link to={`/posts/${e.post_id}`}>
+            <Link to = {`/posts/${e.post_id}/${e.title}/${e.goal_sum}/${e.total_donation}/${e.dead_line}`}>
               <PostCard
                 title={e.title}
                 posterImg={`${IMG_SRC}${e.poster_image}`}
@@ -89,6 +106,7 @@ function PrintPostPage(props) {
                 totalDonation={e.total_donation}
                 deadLine={e.dead_line}
                 postId={e.post_id}
+                onClick={onClickMovePage}
                 key={i}
               />
             </Link>
@@ -107,4 +125,4 @@ function PrintPostPage(props) {
   );
 }
 
-export default PrintPostPage;
+export default LandingPage;

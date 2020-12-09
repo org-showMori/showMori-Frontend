@@ -1,0 +1,13 @@
+.infoContainer {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: row;
+ 
+}
+
+#infoPoster {
+    width: 45%;
+    height: auto;
+}
+
